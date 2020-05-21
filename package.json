@@ -1,0 +1,25 @@
+{
+  "name": "salon_app",
+  "version": "1.0.0",
+  "description": "web and mobile application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muba97/Anayahs_salon_app.git"
+  },
+  "author": "Mubashir Khan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/muba97/Anayahs_salon_app/issues"
+  },
+  "homepage": "https://github.com/muba97/Anayahs_salon_app#readme",
+  "dependencies": {
+    "@shelf/jest-mongodb": "^1.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.15"
+  }
+}
