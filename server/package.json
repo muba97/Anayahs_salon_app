@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest",
-    "test:CI": "jest --coverage --watchAll=false"
+    "test:CI": "test --coverage --watchAll=false"
   },
   "repository": {
     "type": "git",
