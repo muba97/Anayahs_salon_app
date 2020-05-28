@@ -15,5 +15,5 @@ Application Stack: MERN
 
 ### Badges
 
-![](https://github.com/muba97/Anayahs_salon_app/workflows/node.js.yml/badge.svg)
+![](https://github.com/muba97/Anayahs_salon_app/workflows/.github/workflows/node.js.yml/badge.svg)
 
