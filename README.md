@@ -1,5 +1,5 @@
 # Anayahs_salon_app
-### Badges
+
 ![Node.js CI](https://github.com/muba97/Anayahs_salon_app/workflows/Node.js%20CI/badge.svg)
 
 Web Application for Anayah's Salon
