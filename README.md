@@ -12,3 +12,8 @@ Application Stack: MERN
 ### Getting Started
 
 `git clone https://github.com/muba97/Anayahs_salon_app.git`
+
+### Badges
+
+https://github.com/muba97/Anayahs_salon_app.git/workflows/node.js.yml/badge.svg
+
