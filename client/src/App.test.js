@@ -1,9 +1,13 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow } from 'enzyme';
 import App from './App';
 
-test('renders App', () => {
-  const { getByTestId } = render(<App />);
-  const app = getByTestId('app');
-  expect(app).toBeInTheDocument();
+describe('<App /> Tests', () => {
+  const shallowWrapper = shallow(<App />);
+
+  test('renders App', () => {
+    expect(shallowWrapper).toHaveLength(1);
+  });
 });
+
+

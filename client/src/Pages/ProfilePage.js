@@ -6,7 +6,7 @@ const userInfo = {
   lastName: 'Khan',
   email: 'muba@khan.com',
   birthDay: '01/01/1980',
-  phoneNumber: '832-111-8795',
+  phoneNumber: '8321118795',
 };
 
 const ProfilePage = () => {
