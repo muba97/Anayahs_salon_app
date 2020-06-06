@@ -1,5 +1,6 @@
 import React from 'react';
 import ProfileInfo from '../Components/ProfileInfo';
+import { makeStyles } from '@material-ui/core/styles';
 
 const userInfo = {
   firstName: 'Mubashir',
@@ -9,11 +10,18 @@ const userInfo = {
   phoneNumber: '8321118795',
 };
 
+const useStyles = makeStyles({
+  root: {
+    margin: 10,
+  },
+});
+
 const ProfilePage = () => {
   return (
-    <div data-testid="profile-page">
-      <h1>Profile Page</h1>
-      <ProfileInfo userInfo={userInfo} />
+    <div>
+      <div data-testid="profile-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <ProfileInfo userInfo={userInfo} />
+      </div>
     </div>
   );
 };
