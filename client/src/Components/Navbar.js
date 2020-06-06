@@ -31,7 +31,7 @@ const Navbar = () => {
   const classes = useStyles();
   return (
     <div>
-      <AppBar position="Static" className={classes.appbar}>
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Link to="/">
             <ButtonBase>
