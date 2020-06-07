@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,12 +6,11 @@ import * as yup from 'yup';
 
 const editSchema = yup.object().shape({
   firstName: yup.string().required('First Name is Required'),
-  lastName: yup.string().required('Last Name is Require'),
+  lastName: yup.string().required('Last Name is Required'),
   email: yup.string().email('Valid email is required').required(),
   birthDay: yup.string().required('date of birth is required'),
   phoneNumber: yup.number('Must be a number').required('Phone number is required'),
 });
-
 
 const useStyles = makeStyles({
   field: {
@@ -30,7 +29,6 @@ const useStyles = makeStyles({
     '&:disabled': {
       opacity: '40%'
     },
-    disabled: {},
   },
   btn: {
     background: '#000000',
@@ -42,14 +40,16 @@ const useStyles = makeStyles({
     width: '100%',
     margin: '10',
     marginBottom: '5px',
+    '&:disabled': {
+      opacity: '40%'
+    },
   },
 });
 
 const ProfileInfo = ({ userInfo }) => {
-  const { firstName, lastName, email, birthDay, phoneNumber } = userInfo;
   const [formData, setFormData] = useState(userInfo);
   const [edit, setEdit] = useState(true);
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     validationSchema: editSchema,
   });
 
@@ -61,14 +61,21 @@ const ProfileInfo = ({ userInfo }) => {
   };
 
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
-    console.log('final form: ', formData);
-    console.log('SUBMIT button edit state: ', edit)
-    //setEdit(true)
+    if(edit !== false){
+      console.log(JSON.stringify(data));
+      
+      console.log('userInfo: ', userInfo);
+      console.log('formData: ', formData);
+    }
+  };
+
+  const cancelClick = () => {
+    setEdit(true);
+    reset({});
   };
 
   const handleClick = () => {
-    setEdit(false);
+    setEdit(!edit)
   };
 
   const classes = useStyles();
@@ -82,9 +89,9 @@ const ProfileInfo = ({ userInfo }) => {
             type="text"
             className={classes.input}
             name="firstName"
-            ref={register}
+            value={formData.firstName}
+            ref={register({minLength: 5})}
             disabled={edit}
-            defaultValue={formData.firstName}
             onChange={(e) => handleChange(e)}
           />
           {errors.firstName && <p>{errors.firstName.message}</p>}
@@ -97,7 +104,6 @@ const ProfileInfo = ({ userInfo }) => {
             name="lastName"
             disabled={edit}
             ref={register}
-            defaultValue={formData.lastName}
             onChange={(e) => handleChange(e)}
           />
           {errors.lastName && <p>{errors.lastName.message}</p>}
@@ -110,7 +116,6 @@ const ProfileInfo = ({ userInfo }) => {
             className = {classes.input}
             ref={register}
             disabled={edit}
-            defaultValue={formData.email}
             onChange={(e) => handleChange(e)}
           />
           {errors.email && <p>{errors.email.message}</p>}
@@ -123,7 +128,6 @@ const ProfileInfo = ({ userInfo }) => {
             className={classes.input}
             ref={register}
             disabled={edit}
-            defaultValue={formData.birthDay}
             onChange={(e) => handleChange(e)}
           />
           {errors.birthDay && <p>{errors.birthDay.message}</p>}
@@ -136,18 +140,18 @@ const ProfileInfo = ({ userInfo }) => {
             className={classes.input}
             ref={register}
             disabled={edit}
-            defaultValue={formData.phoneNumber}
             onChange={(e) => handleChange(e)}
           />
-          {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+          {errors.phoneNumber && <p>Please enter a correct Phone Number</p>}
         </div>
-        <button onClick={() => handleClick()} className={classes.btn}>Edit</button>
-        <button type="submit" className={classes.btn}>Submit</button>
-        <div>
-          <label>
-            Change Password
-          </label>
-        </div>
+        <button 
+          disabled={errors.firstName || errors.lastName || errors.email  || errors.birthDay || errors.phoneNumber}
+          onClick={() => handleClick()}
+          className={classes.btn}
+        >
+          {edit ? 'EDIT': 'SUBMIT'}
+        </button>
+        {!edit && <button onClick={() => cancelClick()} className={classes.btn}>CANCEL</button>}
       </form>
     </div>
   );
