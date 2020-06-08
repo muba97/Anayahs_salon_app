@@ -5,23 +5,76 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as yup from 'yup';
 
 const editSchema = yup.object().shape({
-  firstName: yup.string().required('First Name is Required'),
-  lastName: yup.string().required('Last Name is Require'),
-  email: yup.string().email('Valid email is required').required(),
-  birthDay: yup.string().required('date of birth is required'),
-  phoneNumber: yup.number('Must be a number').required('Phone number is required'),
+  firstName: yup
+    .string()
+    .max(25, 'At most 25 characters')
+    .required('First Name is Required'),
+  lastName: yup
+    .string()
+    .max(25, 'At most 25 characters')
+    .required('Last Name is Required'),
+  email: yup.string().email('Valid email is required').required('Email is Required'),
+  birthDay: yup
+    .string()
+    .matches(
+      /^(((0?[1-9]|1[012])\/(0?[1-9]|1\d|2[0-8])|(0?[13456789]|1[012])\/(29|30)|(0?[13578]|1[02])\/31)\/(19|[2-9]\d)\d{2}|0?2\/29\/((19|[2-9]\d)(0[48]|[2468][048]|[13579][26])|(([2468][048]|[3579][26])00)))$/,
+      'Enter a valid DOB'
+    )
+    .required('Date of Birth is required'),
+  phoneNumber: yup
+    .string()
+    .matches(
+      /[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/,
+      'Enter Valid Phone Number'
+    )
+    .max(12, 'Must be 10 digits')
+    .required('Phone Number is required'),
 });
 
 const useStyles = makeStyles({
-  input: {
+  field: {
     margin: 10,
+  },
+  input: {
+    display: 'block',
+    boxSizing: 'border-box',
+    width: '120%',
+    borderRadius: '4px',
+    border: '1px solid gray',
+    padding: '10px 15px',
+    marginBottom: 20,
+    fontSize: '12px',
+    '&:disabled': {
+      opacity: '40%',
+    },
+  },
+  btn: {
+    background: '#000000',
+    border: 0,
+    borderRadius: 3,
+    color: 'white',
+    fontFamily: ['Montserrat', 'sans-serif'].join(','),
+    height: 40,
+    width: '107.5%',
+    margin: 10,
+    marginBottom: '5px',
+    '&:disabled': {
+      opacity: '40%',
+    },
+    '&:hover': {
+      opacity: '70%',
+    },
+  },
+  err: {
+    color: 'red',
   },
 });
 
 const ProfileInfo = ({ userInfo }) => {
-  const { firstName, lastName, email, birthDay, phoneNumber } = userInfo;
+  const [finalData, setFinalData] = useState(userInfo);
   const [formData, setFormData] = useState(userInfo);
-  const { register, handleSubmit, errors } = useForm({
+  const [edit, setEdit] = useState(true);
+  const { register, handleSubmit, errors, reset } = useForm({
     validationSchema: editSchema,
   });
 
@@ -31,9 +84,24 @@ const ProfileInfo = ({ userInfo }) => {
       [e.target.name]: e.target.value,
     });
   };
+
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
-    console.log('final form: ', formData);
+    if (edit !== false) {
+      setFinalData(data);
+      setFormData(data);
+    }
+  };
+
+  const cancelClick = () => {
+    setEdit(true);
+    reset(finalData);
+    if (finalData !== formData) {
+      setFormData(finalData);
+    }
+  };
+
+  const handleClick = () => {
+    setEdit(!edit);
   };
 
   const classes = useStyles();
@@ -41,62 +109,121 @@ const ProfileInfo = ({ userInfo }) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={classes.input}>
-          <label> First Name </label>
-          <input
-            type="text"
-            name="firstName"
-            ref={register}
-            defaultValue={formData.firstName}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.firstName && <p>{errors.firstName.message}</p>}
+        <div className={classes.field}>
+          <label htmlFor="firstName">
+            {' '}
+            First Name
+            <input
+              type="text"
+              className={classes.input}
+              name="firstName"
+              placeholder="First Name"
+              defaultValue={formData.firstName}
+              ref={register}
+              disabled={edit}
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.firstName && (
+              <small className={classes.err}>{errors.firstName.message}</small>
+            )}
+          </label>
         </div>
-        <div className={classes.input}>
-          <label> Last Name </label>
-          <input
-            type="text"
-            name="lastName"
-            ref={register}
-            defaultValue={formData.lastName}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.lastName && <p>{errors.lastName.message}</p>}
+        <div className={classes.field}>
+          <label htmlFor="lastName">
+            {' '}
+            Last Name
+            <input
+              type="text"
+              className={classes.input}
+              name="lastName"
+              placeholder="Last Name"
+              defaultValue={formData.lastName}
+              disabled={edit}
+              ref={register}
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.lastName && (
+              <small className={classes.err}>{errors.lastName.message}</small>
+            )}
+          </label>
         </div>
-        <div className={classes.input}>
-          <label> Email </label>
-          <input
-            type="text"
-            name="email"
-            ref={register}
-            defaultValue={formData.email}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
+        <div className={classes.field}>
+          <label htmlFor="email">
+            {' '}
+            Email
+            <input
+              type="text"
+              name="email"
+              placeholder="example@email.com"
+              defaultValue={formData.email}
+              className={classes.input}
+              ref={register}
+              disabled={edit}
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.email && (
+              <small className={classes.err}>{errors.email.message}</small>
+            )}
+          </label>
         </div>
-        <div className={classes.input}>
-          <label> Birthday </label>
-          <input
-            type="text"
-            name="birthDay"
-            ref={register}
-            defaultValue={formData.birthDay}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.birthDay && <p>{errors.birthDay.message}</p>}
+        <div className={classes.field}>
+          <label htmlFor="birthDay">
+            {' '}
+            Birthday
+            <input
+              type="text"
+              name="birthDay"
+              placeholder="mm/dd/yyyy"
+              defaultValue={formData.birthDay}
+              className={classes.input}
+              ref={register}
+              disabled={edit}
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.birthDay && (
+              <small className={classes.err}>{errors.birthDay.message}</small>
+            )}
+          </label>
         </div>
-        <div className={classes.input}>
-          <label> Phone </label>
-          <input
-            type="text"
-            name="phoneNumber"
-            ref={register}
-            defaultValue={formData.phoneNumber}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+        <div className={classes.field}>
+          <label htmlFor="phoneNumber">
+            {' '}
+            Phone Number
+            <input
+              type="tel"
+              name="phoneNumber"
+              placeholder="xxx-xxx-xxx"
+              max={12}
+              defaultValue={formData.phoneNumber}
+              className={classes.input}
+              ref={register}
+              disabled={edit}
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.phoneNumber && (
+              <small className={classes.err}>{errors.phoneNumber.message}</small>
+            )}
+          </label>
         </div>
-        <input type="submit" />
+        <button
+          type="submit"
+          disabled={
+            errors.firstName ||
+            errors.lastName ||
+            errors.email ||
+            errors.birthDay ||
+            errors.phoneNumber
+          }
+          onClick={() => handleClick()}
+          className={classes.btn}
+        >
+          {edit ? 'EDIT' : 'SUBMIT'}
+        </button>
+        {!edit && (
+          <button type="button" onClick={() => cancelClick()} className={classes.btn}>
+            CANCEL
+          </button>
+        )}
       </form>
     </div>
   );

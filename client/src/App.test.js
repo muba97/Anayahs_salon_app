@@ -9,5 +9,3 @@ describe('<App /> Tests', () => {
     expect(shallowWrapper).toHaveLength(1);
   });
 });
-
-

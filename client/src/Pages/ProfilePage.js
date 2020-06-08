@@ -1,4 +1,5 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import ProfileInfo from '../Components/ProfileInfo';
 
 const userInfo = {
@@ -6,14 +7,25 @@ const userInfo = {
   lastName: 'Khan',
   email: 'muba@khan.com',
   birthDay: '01/01/1980',
-  phoneNumber: '8321118795',
+  phoneNumber: '832-111-8795',
 };
 
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 40,
+  },
+});
+
 const ProfilePage = () => {
+  const classes = useStyles();
   return (
-    <div data-testid="profile-page">
-      <h1>Profile Page</h1>
-      <ProfileInfo userInfo={userInfo} />
+    <div>
+      <div data-testid="profile-page" className={classes.root}>
+        <ProfileInfo userInfo={userInfo} />
+      </div>
     </div>
   );
 };
