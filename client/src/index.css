@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Montserrat&display=swap');
 body {
   margin: 0;
-  font-family: 'EB Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 400;
 }

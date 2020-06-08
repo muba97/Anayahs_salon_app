@@ -1,25 +1,29 @@
 import React from 'react';
-import ProfileInfo from '../Components/ProfileInfo';
 import { makeStyles } from '@material-ui/core/styles';
+import ProfileInfo from '../Components/ProfileInfo';
 
 const userInfo = {
   firstName: 'Mubashir',
   lastName: 'Khan',
   email: 'muba@khan.com',
   birthDay: '01/01/1980',
-  phoneNumber: '8321118795',
+  phoneNumber: '832-111-8795',
 };
 
 const useStyles = makeStyles({
   root: {
-    margin: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 40,
   },
 });
 
 const ProfilePage = () => {
+  const classes = useStyles();
   return (
     <div>
-      <div data-testid="profile-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div data-testid="profile-page" className={classes.root}>
         <ProfileInfo userInfo={userInfo} />
       </div>
     </div>
