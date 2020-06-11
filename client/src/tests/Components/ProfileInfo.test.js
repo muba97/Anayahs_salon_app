@@ -15,7 +15,7 @@ describe('<ProfileInfo />', () => {
   });
 
   test('Input good info in form fields ', async () => {
-    const { getByTestId, getByLabelText } = render(<ProfileInfo userInfo={{}} />);
+    const { getByTestId , getByLabelText } = render(<ProfileInfo userInfo={{}} />);
     const firstNameInput = getByLabelText('First Name');
 
     // await act(async () => {

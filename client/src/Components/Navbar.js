@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div data-testid="navBar">
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Link to="/">

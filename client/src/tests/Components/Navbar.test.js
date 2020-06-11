@@ -1,15 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from '../../Components/Navbar';
 
 describe('<Navbar /> Tests', () => {
-  let shallowWrapper;
-
-  beforeEach(() => {
-    shallowWrapper = shallow(<Navbar />);
+  afterEach(() => {
+    cleanup();
   });
 
   test('should render Navbar Component without crashing', () => {
-    expect(shallowWrapper).toHaveLength(1);
+    const { getByTestId } = render(
+      <Router>
+        <Navbar />
+      </Router>
+    );
+
+    const navbar = getByTestId('navBar');
+
+    expect(navbar).toBeInTheDocument();
   });
 });

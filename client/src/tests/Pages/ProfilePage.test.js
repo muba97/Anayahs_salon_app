@@ -1,15 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup } from '@testing-library/react';
 import ProfilePage from '../../Pages/ProfilePage';
 
-describe('<Navbar /> Tests', () => {
-  let shallowWrapper;
-
-  beforeEach(() => {
-    shallowWrapper = shallow(<ProfilePage />);
+describe('<ProfilePage /> Tests', () => {
+  afterEach(() => {
+    cleanup();
   });
 
   test('should render Navbar Component without crashing', () => {
-    expect(shallowWrapper).toHaveLength(1);
+    const { getByTestId } = render(<ProfilePage />);
+
+    const profilePage = getByTestId('profilePage');
+
+    expect(profilePage).toBeInTheDocument();
   });
 });
