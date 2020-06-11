@@ -107,13 +107,14 @@ const ProfileInfo = ({ userInfo }) => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div data-testid="profileInfo">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.field}>
           <label htmlFor="firstName">
             {' '}
             First Name
             <input
+              data-testid="input-firstName"
               type="text"
               className={classes.input}
               name="firstName"
@@ -207,6 +208,7 @@ const ProfileInfo = ({ userInfo }) => {
         </div>
         <button
           type="submit"
+          data-testid="edit-submit"
           disabled={
             errors.firstName ||
             errors.lastName ||
