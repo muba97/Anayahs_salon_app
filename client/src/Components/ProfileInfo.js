@@ -222,7 +222,12 @@ const ProfileInfo = ({ userInfo }) => {
           {edit ? 'EDIT' : 'SUBMIT'}
         </button>
         {!edit && (
-          <button type="button" onClick={() => cancelClick()} className={classes.btn}>
+          <button
+            data-testid="cancelButton"
+            type="button"
+            onClick={() => cancelClick()}
+            className={classes.btn}
+          >
             CANCEL
           </button>
         )}
