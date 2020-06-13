@@ -20,7 +20,9 @@
   "homepage": "https://github.com/muba97/Anayahs_salon_app#readme",
   "dependencies": {
     "@shelf/jest-mongodb": "^1.1.5",
+    "apollo-server-express": "^2.14.4",
     "express": "^4.17.1",
+    "graphql": "^15.1.0",
     "jest": "^26.0.1",
     "mongoose": "^5.9.15"
   }
