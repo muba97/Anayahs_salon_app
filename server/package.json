@@ -4,7 +4,7 @@
   "description": "web and mobile application",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon --exec babel-node src/server.js",
     "test": "jest",
     "test:CI": "test --coverage --watchAll=false"
   },
@@ -25,5 +25,13 @@
     "graphql": "^15.1.0",
     "jest": "^26.0.1",
     "mongoose": "^5.9.15"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
   }
 }
