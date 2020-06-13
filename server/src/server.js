@@ -1,6 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
+require('dotenv').config();
 
   const typeDefs = gql`
   type Query {
