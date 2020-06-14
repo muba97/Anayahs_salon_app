@@ -26,10 +26,14 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-mongoose.connect(process.env.MONGO_URI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  })
+  .then(() => console.log('Mongodb connected'))
+  .catch((err) => console.log(err));
 
 app.listen({ port: 4000 }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
