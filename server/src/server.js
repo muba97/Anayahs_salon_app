@@ -7,18 +7,22 @@ import resolvers from './resolvers';
 
 dotenv.config();
 
+const { PORT, NODE_ENV, MONGO_URI } = process.env;
+
 const startServer = async () => {
+  const IN_PROD = NODE_ENV === 'production';
   const app = express();
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    playground: !IN_PROD,
   });
 
   server.applyMiddleware({ app });
 
   mongoose
-    .connect(process.env.MONGO_URI, {
+    .connect(MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -26,7 +30,7 @@ const startServer = async () => {
     .then(() => console.log('Mongodb connected'))
     .catch((err) => console.log(err));
 
-  app.listen({ port: 4000 }, () =>
+  app.listen({ port: PORT }, () =>
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   );
 };
