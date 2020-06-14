@@ -23,7 +23,7 @@ const ProfilePage = () => {
   const classes = useStyles();
   return (
     <div>
-      <div data-testid="profile-page" className={classes.root}>
+      <div data-testid="profilePage" className={classes.root}>
         <ProfileInfo userInfo={userInfo} />
       </div>
     </div>
