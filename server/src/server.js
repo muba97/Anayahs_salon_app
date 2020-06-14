@@ -6,29 +6,29 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const typeDefs = gql`
-type Query {
-  hello: String!
-}
+  type Query {
+    hello: String!
+  }
 `;
 
 const resolvers = {
   Query: {
-    hello: () => 'hi'
-  }
+    hello: () => 'hi',
+  },
 };
 
 const app = express();
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 server.applyMiddleware({ app });
 
-mongoose.connect(process.env.MONGO_URI, { 
+mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
 });
 
 app.listen({ port: 4000 }, () =>
