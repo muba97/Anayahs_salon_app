@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
     "test": "jest",
-    "test:coverage": "test --coverage",
+    "test:coverage": "jest --coverage",
     "test:CI": "test --coverage --watchAll=false"
   },
   "repository": {
