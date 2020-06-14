@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toolbar, AppBar, IconButton, ButtonBase, makeStyles } from '@material-ui/core';
+import { Toolbar, AppBar, ButtonBase, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div data-testid="navBar">
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Link to="/">
