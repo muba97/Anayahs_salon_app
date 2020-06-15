@@ -13,6 +13,7 @@ export default gql`
       email: String!
       birthDay: String!
       phoneNumber: String!
+      password: String!
     ): User
   }
 
@@ -23,5 +24,6 @@ export default gql`
     email: String!
     birthDay: String!
     phoneNumber: String!
+    password: String!
   }
 `;
