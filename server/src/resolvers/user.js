@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { UserInputError } from 'apollo-server-express';
-import { User } from '../models';
+import User from '../models/user';
 
 export default {
   Query: {

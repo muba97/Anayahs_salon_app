@@ -2,8 +2,13 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import typeDefs from './typeDefs';
-import resolvers from './resolvers';
+import path from 'path';
+import {
+  makeExecutableSchema,
+  mergeTypeDefs,
+  mergeResolvers,
+  loadFilesSync,
+} from 'graphql-tools';
 
 dotenv.config();
 
@@ -13,15 +18,20 @@ const startServer = async () => {
   const IN_PROD = NODE_ENV === 'production';
   const app = express();
 
-  const server = new ApolloServer({
+  const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
+  const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
+
+  const schemas = makeExecutableSchema({
     typeDefs,
     resolvers,
+  });
+
+  const server = new ApolloServer({
+    schema: schemas,
     playground: !IN_PROD,
   });
 
   server.applyMiddleware({ app });
-
-  console.log('MONGO_DB', MONGO_DB);
 
   mongoose
     .connect(
