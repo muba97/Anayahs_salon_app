@@ -1,9 +1,8 @@
-import { gql } from 'apollo-server-express';
 import axios from 'axios';
-import { User, Mutation, Query } from '../../src/typeDefs/user';
+import 'regenerator-runtime';
 
 describe('User typeDefs Test', () => {
-  test('should return correct data of all users', async () => {
+  test('users', async () => {
     const response = await axios.post('http://localhost:4000/graphql', {
       query: `
       query {
