@@ -12,7 +12,7 @@ import {
 
 dotenv.config();
 
-const { PORT, NODE_ENV, MONGO_DB } = process.env;
+const { PORT, NODE_ENV, MONGO_DB, MONGO_USER, MONGO_PASS, MONGO_CLUSTER } = process.env;
 
 const startServer = async () => {
   const IN_PROD = NODE_ENV === 'production';
@@ -35,7 +35,7 @@ const startServer = async () => {
 
   mongoose
     .connect(
-      `mongodb+srv://anyahssalon:Khan11@salonapp-lgmgb.mongodb.net/${MONGO_DB}?retryWrites=true&w=majority`,
+      `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true&w=majority`,
       {
         useUnifiedTopology: true,
         useNewUrlParser: true,
@@ -46,7 +46,7 @@ const startServer = async () => {
     .catch((err) => console.log(err));
 
   app.listen({ port: PORT }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
   );
 };
 

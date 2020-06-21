@@ -1,9 +1,18 @@
 import axios from 'axios';
 import 'regenerator-runtime';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const { PORT } = process.env;
 
 describe('User typeDefs Test', () => {
+  // beforeAll(() => {
+  //   return clearDB();
+  // });
+
   test('users', async () => {
-    const response = await axios.post('http://localhost:4000/graphql', {
+    const response = await axios.post(`http://localhost:${PORT}/graphql`, {
       query: `
       query {
         users {
@@ -20,35 +29,13 @@ describe('User typeDefs Test', () => {
     const { data } = response;
     expect(data).toMatchObject({
       data: {
-        users: [
-          {
-            id: '5eea48b4cc15f71ad0706d0d',
-            firstName: 'Hector',
-            lastName: 'Ram',
-            email: 'differntEmail@gmail.com',
-            phoneNumber: '123-123-1233',
-          },
-          {
-            id: '5eea48bcd145cf1aeb1ecc24',
-            firstName: 'Mubashir',
-            lastName: 'Khan',
-            email: 'muba@fsdf.com',
-            phoneNumber: '832-222-2222',
-          },
-          {
-            id: '5eeaab34560a1080adf18f4f',
-            firstName: 'Mubashir',
-            lastName: 'Khan',
-            email: 'muba@email.com',
-            phoneNumber: '832-222-2222',
-          },
-        ],
+        users: [],
       },
     });
   });
 
-  test('mutations', async () => {
-    const response = await axios.post('http://localhost:4000/graphql', {
+  test('signUp mutation: successful attempt', async () => {
+    const response = await axios.post('http://localhost:60000/graphql', {
       query: `
       mutation {
         signUp(firstName:"Mubashir", lastName:"Khan", email:"muba@gmail.com", birthDay: "10/12/2020", phoneNumber: "832-222-2222", password:"hello"){
@@ -74,6 +61,29 @@ describe('User typeDefs Test', () => {
           phoneNumber: '832-222-2222',
           password: 'hello',
         },
+      },
+    });
+  });
+  test('signUp mutation: failed attempt with duplicate email', async () => {
+    const response = await axios.post('http://localhost:60000/graphql', {
+      query: `
+      mutation {
+        signUp(firstName:"Mubashir", lastName:"Khan", email:"muba@gmail.com", birthDay: "10/12/2020", phoneNumber: "832-222-2222", password:"hello"){
+          id
+          firstName
+          lastName
+          email
+          birthDay
+          phoneNumber
+          password
+        }
+      }
+      `,
+    });
+    const { data } = response;
+    expect(data).toMatchObject({
+      data: {
+        signUp: null,
       },
     });
   });
