@@ -1,15 +1,21 @@
 import axios from 'axios';
 import 'regenerator-runtime';
 import dotenv from 'dotenv';
+import { connectDB, disconnectDB, clearDB } from '../db-utils';
 
 dotenv.config();
 
 const { PORT } = process.env;
 
 describe('User typeDefs Test', () => {
-  // beforeAll(() => {
-  //   return clearDB();
-  // });
+  beforeAll(async () => {
+    await connectDB();
+  });
+
+  afterAll(async () => {
+    await clearDB();
+    await disconnectDB();
+  });
 
   test('users', async () => {
     const response = await axios.post(`http://localhost:${PORT}/graphql`, {
