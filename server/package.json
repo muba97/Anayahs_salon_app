@@ -4,8 +4,8 @@
   "description": "web and mobile application",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
-    "test-server": "MONGO_DB='Testing' nodemon --exec babel-node src/server.js",
+    "start": "nodemon --exec babel-node src/index.js",
+    "test-server": "MONGO_DB='Testing' nodemon --exec babel-node src/index.js",
     "test": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "test:CI": "test --coverage --watchAll=false"
@@ -54,6 +54,7 @@
     "eslint-plugin-prettier": "^3.1.3",
     "graphql-tools": "^6.0.10",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "supertest": "^4.0.2"
   }
 }

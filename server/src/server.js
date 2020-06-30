@@ -14,40 +14,32 @@ dotenv.config();
 
 const { PORT, NODE_ENV, MONGO_DB, MONGO_USER, MONGO_PASS, MONGO_CLUSTER } = process.env;
 
-const startServer = async () => {
-  const IN_PROD = NODE_ENV === 'production';
-  const app = express();
+const IN_PROD = NODE_ENV === 'production';
+export const app = express();
 
-  const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
-  const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
+const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
+const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
 
-  const schemas = makeExecutableSchema({
-    typeDefs,
-    resolvers,
-  });
+const schemas = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
-  const server = new ApolloServer({
-    schema: schemas,
-    playground: !IN_PROD,
-  });
+export const server = new ApolloServer({
+  schema: schemas,
+  playground: !IN_PROD,
+});
 
-  server.applyMiddleware({ app });
+server.applyMiddleware({ app });
 
-  mongoose
-    .connect(
-      `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true&w=majority`,
-      {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useCreateIndex: true,
-      }
-    )
-    .then(() => console.log('Mongodb connected'))
-    .catch((err) => console.log(err));
-
-  app.listen({ port: PORT }, () =>
-    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
-  );
-};
-
-startServer();
+mongoose
+  .connect(
+    `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true&w=majority`,
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    }
+  )
+  .then(() => console.log('Mongodb connected'))
+  .catch((err) => console.log(err));
