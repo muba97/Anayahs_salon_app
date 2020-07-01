@@ -2,11 +2,11 @@
   "name": "salon_app",
   "version": "1.0.0",
   "description": "web and mobile application",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "test-server": "MONGO_DB='Testing' nodemon --exec babel-node src/index.js",
-    "test": "jest --watchAll",
+    "test": "MONGO_DB='Testing' jest",
     "test:coverage": "jest --coverage",
     "test:CI": "test --coverage --watchAll=false"
   },

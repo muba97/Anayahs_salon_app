@@ -1,14 +1,17 @@
-import mongoose from 'mongoose';
+import { connections, mongoCollections } from './server';
 
 export const disconnectDB = async () => {
-  await mongoose.connection.dropDatabase();
-  await mongoose.connection.close();
+  await connections
+    .dropDatabase()
+    .then(console.log('Dropped DB'))
+    .catch((err) => console.log(err));
+  await connections.close();
 };
 
 export const clearDB = async () => {
-  const mongoCollections = mongoose.connection.collections;
+  console.log('collection: ', mongoCollections);
 
-  mongoCollections.forEach(async (key) => {
+  Object.keys(mongoCollections).forEach(async (key) => {
     const collection = mongoCollections[key];
     await collection.deleteMany({});
   });

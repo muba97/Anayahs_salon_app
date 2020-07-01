@@ -32,6 +32,8 @@ export const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
+console.log('DB being used: ', MONGO_DB);
+
 mongoose
   .connect(
     `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true&w=majority`,
@@ -41,5 +43,10 @@ mongoose
       useCreateIndex: true,
     }
   )
-  .then(() => console.log('Mongodb connected'))
+  .then(() => {
+    console.log('Mongodb connected');
+  })
   .catch((err) => console.log(err));
+
+export const connections = mongoose.connection;
+export const mongoCollections = mongoose.connection.collections;
