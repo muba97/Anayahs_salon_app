@@ -10,10 +10,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build: http://localhost:55555/graphql
+  build:
 
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x]
@@ -36,10 +35,8 @@ jobs:
         MONGO_USER: ${{ secrets.MONGO_USER }}
         MONGO_PASS: ${{ secrets.MONGO_PASS }}
         MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
-      
       run: |
         cd server
         npm ci
-        PORT=$PORT NODE_ENV=$NODE_ENV MONGO_DB=$MONGO_DB MONGO_USER=$MONGO_USER MONGO_PASS=$MONGO_PASS MONGO_CLUSTER=$MONGO_CLUSTER npm server
-        npm test:CI
+        PORT=$PORT NODE_ENV=$NODE_ENV MONGO_DB=$MONGO_DB MONGO_USER=$MONGO_USER MONGO_PASS=$MONGO_PASS MONGO_CLUSTER=$MONGO_CLUSTER npm server-test:CI
         
