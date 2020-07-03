@@ -4,11 +4,12 @@
   "description": "web and mobile application",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "PORT=$PORT nodemon --exec babel-node src/index.js",
     "test-server": "MONGO_DB='Testing' nodemon --exec babel-node src/index.js",
     "test": "MONGO_DB='Testing' jest",
     "test:coverage": "jest --coverage",
-    "test:CI": "test --coverage --watchAll=false"
+    "test:CI": "test --coverage --watchAll=false",
+    "server-test:CI": "start-server-and-test start http://localhost:4000/graphql test:CI"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "graphql-tools": "^6.0.10",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
+    "start-server-and-test": "^1.11.0",
     "supertest": "^4.0.2"
   }
 }
