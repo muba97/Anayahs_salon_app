@@ -9,7 +9,7 @@
     "test": "MONGO_DB='Testing' jest",
     "test:coverage": "jest --coverage",
     "test:CI": "test --coverage --watchAll=false",
-    "server:CI": "PORT=$G-PORT NODE_ENV=$G-NODE_ENV MONGO_DB=$G-MONGO_DB MONGO_USER=$G-MONGO_USER MONGO_PASS=$G-MONGO_PASS MONGO_CLUSTER=$G-MONGO_CLUSTER nodemon --exec babel-node src/index.js"
+    "server-test:CI": "PORT=$G-PORT NODE_ENV=$G-NODE_ENV MONGO_DB=$G-MONGO_DB MONGO_USER=$G-MONGO_USER MONGO_PASS=$G-MONGO_PASS MONGO_CLUSTER=$G-MONGO_CLUSTER npm run start & wait-on http://localhost:4000/graphql && PORT=$G-PORT NODE_ENV=$G-NODE_ENV MONGO_DB=$G-MONGO_DB MONGO_USER=$G-MONGO_USER MONGO_PASS=$G-MONGO_PASS MONGO_CLUSTER=$G-MONGO_CLUSTER npm run test"
   },
   "repository": {
     "type": "git",

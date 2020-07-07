@@ -29,13 +29,14 @@ jobs:
       - run: |
           cd server
           npm ci
-      - run:
-          name: Running Server
-          env:
-            G-PORT: ${{ secrets.PORT }}
-            G-NODE_ENV: ${{ secrets.NODE_ENV }}
-            G-MONGO_DB: ${{ secrets.MONGO_DB }}
-            G-MONGO_USER: ${{ secrets.MONGO_USER }}
-            G-MONGO_PASS: ${{ secrets.MONGO_PASS }}
-            G-MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
-          command: cd server && npm run server
+      - name: Running Server and test
+        env:
+          G-PORT: ${{ secrets.PORT }}
+          G-NODE_ENV: ${{ secrets.NODE_ENV }}
+          G-MONGO_DB: ${{ secrets.MONGO_DB }}
+          G-MONGO_USER: ${{ secrets.MONGO_USER }}
+          G-MONGO_PASS: ${{ secrets.MONGO_PASS }}
+          G-MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
+        run: |
+          cd server
+          npm run server-test:CI
