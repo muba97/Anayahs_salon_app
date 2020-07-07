@@ -39,4 +39,5 @@ jobs:
           G_MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
         run: |
           cd server
+          echo $G_PORT
           npm run server-test:CI
