@@ -33,6 +33,11 @@ export const server = new ApolloServer({
 server.applyMiddleware({ app });
 
 console.log('DB being used: ', MONGO_DB);
+console.log('PORT Being Used', PORT);
+console.log(
+  'MONGO_URI Being Used: ',
+  `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true&w=majority`
+);
 
 mongoose
   .connect(
