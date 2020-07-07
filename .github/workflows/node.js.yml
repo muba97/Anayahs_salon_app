@@ -5,40 +5,37 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: |
-        cd client
-        npm ci
-        npm test
-    - name: Run npm install for server
-        run: |
-            cd server
-            npm ci
-    - run:
-        name: Running Server
-        env:
-          G-PORT: ${{ secrets.PORT }}
-          G-NODE_ENV: ${{ secrets.NODE_ENV }}
-          G-MONGO_DB: ${{ secrets.MONGO_DB }}
-          G-MONGO_USER: ${{ secrets.MONGO_USER }}
-          G-MONGO_PASS: ${{ secrets.MONGO_PASS }}
-          G-MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
-        command: cd server && npm run server
-        
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          cd client
+          npm ci
+          npm test
+      - run: |
+          cd server
+          npm ci
+      - run:
+          name: Running Server
+          env:
+            G-PORT: ${{ secrets.PORT }}
+            G-NODE_ENV: ${{ secrets.NODE_ENV }}
+            G-MONGO_DB: ${{ secrets.MONGO_DB }}
+            G-MONGO_USER: ${{ secrets.MONGO_USER }}
+            G-MONGO_PASS: ${{ secrets.MONGO_PASS }}
+            G-MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
+          command: cd server && npm run server
