@@ -15,34 +15,8 @@ jobs:
           name: Run client tests
           command: cd client && npm run test
 
-  Apollo Server:
-    docker:
-      - image: circleci/node
-
-    steps:
-      - checkout
-      - run:
-          name: npm install for Server
-          command: cd server && npm ci
-
-      - run:
-          name: Starting test server
-          command: |
-            cd server 
-            PORT=$PORT NODE_ENV=$NODE_ENV MONGO_USER=$MONGO_USER MONGO_PASS=$MONGO_PASS MONGO_DB=$MONGO_DB MONGO_CLUSTER=$MONGO_CLUSTER npm run start
-          background: true
-
-      - run: sleep 8
-
-      - run:
-          name: Run server tests
-          command: |
-            cd server
-            PORT=$PORT NODE_ENV=$NODE_ENV MONGO_USER=$MONGO_USER MONGO_PASS=$MONGO_PASS MONGO_DB=$MONGO_DB MONGO_CLUSTER=$MONGO_CLUSTER npm run test:CI
-
 workflows:
   version: 2.1
   Build-and-Test:
     jobs:
       - React Client
-      - Apollo Server
