@@ -11,7 +11,7 @@ jobs:
           name: npm install for client
           command: cd client && npm ci
 
-      - run: echo $PORT
+      - run: echo $PORT | base64 --decode
       - run: echo ${PORT}
 
       - run:
