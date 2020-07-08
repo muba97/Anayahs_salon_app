@@ -12,6 +12,7 @@ jobs:
           - name: Run client tests
           - command: cd client && npm run test
 workflows:
+  version: 2.1
   Build and Test:
     jobs:
       - Client
