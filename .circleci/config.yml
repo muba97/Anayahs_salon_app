@@ -8,14 +8,14 @@ jobs:
     steps:
       - checkout
       - run:
-          - name: npm install for client
-          - working_directory: ~/client
-          - command: npm install
+          name: npm install for client
+          working_directory: ~/client
+          command: npm install
 
       - run:
-          - name: Run client tests
-          - working_directory: ~/client
-          - command: npm run test
+          name: Run client tests
+          working_directory: ~/client
+          command: npm run test
 
 workflows:
   version: 2.1
