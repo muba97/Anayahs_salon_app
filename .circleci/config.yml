@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   React Client:
     docker:
-      image: circleci/node:12
+      - image: circleci/node
 
     steps:
       - checkout
@@ -17,7 +17,7 @@ jobs:
           working_directory: ~/client
           command: npm run test
 
-workflows:
+workflows::
   version: 2.1
   Build and Test:
     jobs:
