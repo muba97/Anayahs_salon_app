@@ -1,42 +1,17 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
-
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-
+version: 2.1
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-
+  Client:
+    docker:
+      image: circleci/node:12
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          cd client
-          npm ci
-          npm test
-      - run: |
-          cd server
-          npm ci
-      - name: Running Server and test
-        env:
-          G_PORT: ${{ secrets.PORT }}
-          G_NODE_ENV: ${{ secrets.NODE_ENV }}
-          G_MONGO_DB: ${{ secrets.MONGO_DB }}
-          G_MONGO_USER: ${{ secrets.MONGO_USER }}
-          G_MONGO_PASS: ${{ secrets.MONGO_PASS }}
-          G_MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
-        run: |
-          cd server
-          npm run server-test:CI
+      - checkout
+      - run:
+          - name: npm install for client
+          - command: cd client && npm install
+      - run:
+          - name: Run client tests
+          - command: cd client && npm run test
+workflows:
+  Build and Test:
+    jobs:
+      - Client
