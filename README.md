@@ -5,16 +5,13 @@
 
 Web Application for Anayah's Salon
 
-
 Application Stack: MERN
 
 - MongoDB Atlas
-- Express
+- Apollo-Express GraphQL
 - React
 - Node
 
 ### Getting Started
 
 `git clone https://github.com/muba97/Anayahs_salon_app.git`
-
-
