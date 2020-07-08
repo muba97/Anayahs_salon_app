@@ -17,8 +17,8 @@ jobs:
           working_directory: ~/client
           command: npm run test
 
-workflows::
+workflows:
   version: 2.1
-  Build and Test:
+  Build-and-Test:
     jobs:
       - React Client
