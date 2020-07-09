@@ -1,0 +1,22 @@
+version: 2.1
+
+jobs:
+  React Client:
+    docker:
+      - image: circleci/node
+
+    steps:
+      - checkout
+      - run:
+          name: npm install for client
+          command: cd client && npm ci
+
+      - run:
+          name: Run client tests
+          command: cd client && npm run test
+
+workflows:
+  version: 2.1
+  Build-and-Test:
+    jobs:
+      - React Client
