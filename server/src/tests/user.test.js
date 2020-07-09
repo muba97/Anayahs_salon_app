@@ -9,10 +9,10 @@ const { PORT } = process.env;
 
 describe('User typeDefs Test', () => {
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectDB('users');
   });
 
-  test('users', async () => {
+  test('user', async () => {
     const response = await axios.post(`http://localhost:${PORT}/graphql`, {
       query: `
       query {

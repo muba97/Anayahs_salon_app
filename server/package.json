@@ -8,8 +8,7 @@
     "test-server": "MONGO_DB='Testing' nodemon --exec babel-node src/index.js",
     "test": "MONGO_DB='Testing' jest",
     "test:coverage": "jest --coverage",
-    "test:CI": "jest --coverage --watchAll=false",
-    "testing": "echo 'hello world'"
+    "test:CI": "jest --coverage --watchAll=false"
   },
   "repository": {
     "type": "git",

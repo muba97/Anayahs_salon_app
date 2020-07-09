@@ -1,18 +1,10 @@
-import { connections, mongoCollections } from './server';
+/* eslint-disable import/prefer-default-export */
+import { connections } from './server';
 
-export const disconnectDB = async () => {
+export const disconnectDB = async (collectionName) => {
   await connections
-    .dropDatabase()
-    .then(console.log('Dropped DB'))
+    .dropCollection(collectionName)
+    .then(console.log(`Dropped collection: ${collectionName}`))
     .catch((err) => console.log(err));
   await connections.close();
-};
-
-export const clearDB = async () => {
-  console.log('collection: ', mongoCollections);
-
-  Object.keys(mongoCollections).forEach(async (key) => {
-    const collection = mongoCollections[key];
-    await collection.deleteMany({});
-  });
 };

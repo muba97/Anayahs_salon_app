@@ -12,7 +12,7 @@ import {
 
 dotenv.config();
 
-const { PORT, NODE_ENV, MONGO_DB, MONGO_USER, MONGO_PASS, MONGO_CLUSTER } = process.env;
+const { NODE_ENV, MONGO_DB, MONGO_USER, MONGO_PASS, MONGO_CLUSTER } = process.env;
 
 const IN_PROD = NODE_ENV === 'production';
 export const app = express();
@@ -33,11 +33,6 @@ export const server = new ApolloServer({
 server.applyMiddleware({ app });
 
 console.log('DB being used: ', MONGO_DB);
-console.log('PORT Being Used', PORT);
-console.log(
-  'MONGO_URI Being Used: ',
-  `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@${MONGO_CLUSTER}/${MONGO_DB}?retryWrites=true&w=majority`
-);
 
 mongoose
   .connect(
@@ -54,4 +49,3 @@ mongoose
   .catch((err) => console.log(err));
 
 export const connections = mongoose.connection;
-export const mongoCollections = mongoose.connection.collections;
