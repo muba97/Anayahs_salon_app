@@ -4,11 +4,19 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient, gql } from 'apollo-boost';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from "apollo-cache-inmemory";
 import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: 'http://localhost:60001/graphql',
+});
+
 const client = new ApolloClient({
-  uri: 'http://localhost:50000/graphql',
+  cache,
+  link
 });
 
 client
