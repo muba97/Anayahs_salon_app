@@ -12,6 +12,7 @@
     "apollo-boost": "^0.4.9",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-link-http": "^1.5.17",
+    "concurrently": "^5.2.0",
     "graphql": "^15.3.0",
     "mutationobserver-shim": "^0.3.7",
     "prettier": "^2.0.5",

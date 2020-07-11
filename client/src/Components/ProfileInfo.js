@@ -75,6 +75,7 @@ const ProfileInfo = ({ userInfo }) => {
   const [formData, setFormData] = useState(userInfo);
   const [edit, setEdit] = useState(true);
   const { register, handleSubmit, errors, reset } = useForm({
+    reValidateMode: 'onSubmit',
     validationSchema: editSchema,
   });
 
