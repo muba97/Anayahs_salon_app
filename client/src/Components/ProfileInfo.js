@@ -2,34 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-import * as yup from 'yup';
-
-const editSchema = yup.object().shape({
-  firstName: yup
-    .string()
-    .max(25, 'At most 25 characters')
-    .required('First Name is Required'),
-  lastName: yup
-    .string()
-    .max(25, 'At most 25 characters')
-    .required('Last Name is Required'),
-  email: yup.string().email('Valid email is required').required('Email is Required'),
-  birthDay: yup
-    .string()
-    .matches(
-      /^(((0?[1-9]|1[012])\/(0?[1-9]|1\d|2[0-8])|(0?[13456789]|1[012])\/(29|30)|(0?[13578]|1[02])\/31)\/(19|[2-9]\d)\d{2}|0?2\/29\/((19|[2-9]\d)(0[48]|[2468][048]|[13579][26])|(([2468][048]|[3579][26])00)))$/,
-      'Enter a valid DOB'
-    )
-    .required('Date of Birth is required'),
-  phoneNumber: yup
-    .string()
-    .matches(
-      /[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]/,
-      'Enter Valid Phone Number'
-    )
-    .max(12, 'Must be 10 digits')
-    .required('Phone Number is required'),
-});
+import inputSchema from '../utils/inputSchema';
 
 const useStyles = makeStyles({
   field: {
@@ -76,7 +49,7 @@ const ProfileInfo = ({ userInfo }) => {
   const [edit, setEdit] = useState(true);
   const { register, handleSubmit, errors, reset } = useForm({
     reValidateMode: 'onSubmit',
-    validationSchema: editSchema,
+    validationSchema: inputSchema,
   });
 
   const handleChange = (e) => {
