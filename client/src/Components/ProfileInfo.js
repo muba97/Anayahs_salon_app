@@ -210,13 +210,6 @@ const ProfileInfo = ({ userInfo }) => {
         <button
           type="submit"
           data-testid="edit-submit"
-          disabled={
-            errors.firstName ||
-            errors.lastName ||
-            errors.email ||
-            errors.birthDay ||
-            errors.phoneNumber
-          }
           onClick={() => handleClick()}
           className={classes.btn}
         >

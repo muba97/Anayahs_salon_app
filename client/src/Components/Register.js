@@ -34,14 +34,12 @@ const editSchema = yup.object().shape({
 const useStyles = makeStyles({
   field: {
     margin: 10,
-    width: '10rem',
-    display: 'flex',
-    flexDirection: 'column',
   },
   input: {
     display: 'block',
     boxSizing: 'border-box',
     borderRadius: '4px',
+    width: '120%',
     border: '1px solid gray',
     padding: '10px 15px',
     marginBottom: 20,
@@ -57,6 +55,7 @@ const useStyles = makeStyles({
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
     height: 40,
+    width: '111%',
     margin: 10,
     marginBottom: '5px',
     '&:disabled': {
@@ -76,6 +75,8 @@ const useStyles = makeStyles({
 
 const Register = () => {
   const [formData, setFormData] = useState([]);
+  const [emptyPass, setEmptyPass] = useState(false);
+  const [notSamePass, setNotSamePass] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm({
     reValidateMode: 'onSubmit',
     validationSchema: editSchema,
@@ -89,7 +90,15 @@ const Register = () => {
   };
 
   const onSubmit = (data) => {
-    setFormData(data);
+    if (data.password !== data.confirmPassword) {
+      setNotSamePass(true);
+    } else if (data.password === '' || data.confirmPassword === '') {
+      setEmptyPass(true);
+    } else {
+      setFormData(data);
+      setEmptyPass(false);
+      setNotSamePass(false);
+    }
   };
 
   const classes = useStyles();
@@ -193,14 +202,10 @@ const Register = () => {
                 type="password"
                 name="password"
                 placeholder="password"
-                max={12}
                 className={classes.input}
                 ref={register}
                 onChange={(e) => handleChange(e)}
               />
-              {errors.phoneNumber && (
-                <small className={classes.err}>{errors.phoneNumber.message}</small>
-              )}
             </label>
           </div>
           <div className={classes.field}>
@@ -211,13 +216,13 @@ const Register = () => {
                 type="password"
                 name="confirmPassword"
                 placeholder="password"
-                max={12}
                 className={classes.input}
                 ref={register}
                 onChange={(e) => handleChange(e)}
               />
-              {errors.phoneNumber && (
-                <small className={classes.err}>{errors.phoneNumber.message}</small>
+              {emptyPass && <small className={classes.err}>Passwords required</small>}
+              {notSamePass && (
+                <small className={classes.err}>Passwords not matching</small>
               )}
             </label>
           </div>
