@@ -70,6 +70,7 @@ const useStyles = makeStyles({
   },
   text: {
     marginBottom: 40,
+    textDecorationLine: 'none',
   },
 });
 
@@ -233,7 +234,10 @@ const Register = () => {
       </div>
       <div className={classes.text}>
         <small>
-          Already have an account? Log in <Link to="/login">here</Link>
+          Already have an account? Log in{' '}
+          <Link to="/login" className={classes.text}>
+            here
+          </Link>
         </small>
       </div>
     </div>
