@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-import inputSchema from '../utils/inputSchema';
+import { profileSchema } from '../utils/yupSchemas';
 
 const useStyles = makeStyles({
   field: {
@@ -49,7 +49,7 @@ const ProfileInfo = ({ userInfo }) => {
   const [edit, setEdit] = useState(true);
   const { register, handleSubmit, errors, reset } = useForm({
     reValidateMode: 'onSubmit',
-    validationSchema: inputSchema,
+    validationSchema: profileSchema,
   });
 
   const handleChange = (e) => {

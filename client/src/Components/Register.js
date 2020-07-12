@@ -3,20 +3,17 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import inputSchema from '../utils/inputSchema';
+import { registerSchema } from '../utils/yupSchemas';
 
 const useStyles = makeStyles({
-  field: {
-    margin: 10,
-  },
   input: {
     display: 'block',
     boxSizing: 'border-box',
-    borderRadius: '4px',
+    borderRadius: '0.25em',
+    marginBottom: 10,
     width: '100%',
-    border: '1px solid gray',
-    padding: '10px 15px',
-    marginBottom: 20,
+    border: '0.0625em solid gray',
+    padding: '0.625em 0.9375em',
     fontSize: '12px',
     '&:disabled': {
       opacity: '40%',
@@ -25,12 +22,13 @@ const useStyles = makeStyles({
   btn: {
     background: '#000000',
     border: 0,
-    borderRadius: 3,
+    borderRadius: '0.25em',
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
     height: 40,
     width: '100%',
-    marginBottom: '5px',
+    marginTop: '0.3125em',
+    marginBottom: '0.3125em',
     '&:disabled': {
       opacity: '40%',
     },
@@ -40,6 +38,7 @@ const useStyles = makeStyles({
   },
   err: {
     color: 'red',
+    marginBottom: '0.3125em',
   },
   text: {
     marginBottom: 40,
@@ -49,11 +48,9 @@ const useStyles = makeStyles({
 
 const Register = () => {
   const [formData, setFormData] = useState([]);
-  const [emptyPass, setEmptyPass] = useState(false);
-  const [notSamePass, setNotSamePass] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm({
     reValidateMode: 'onSubmit',
-    validationSchema: inputSchema,
+    validationSchema: registerSchema,
   });
 
   const handleChange = (e) => {
@@ -64,15 +61,7 @@ const Register = () => {
   };
 
   const onSubmit = (data) => {
-    if (data.password !== data.confirmPassword) {
-      setNotSamePass(true);
-    } else if (data.password === '' || data.confirmPassword === '') {
-      setEmptyPass(true);
-    } else {
-      setFormData(data);
-      setEmptyPass(false);
-      setNotSamePass(false);
-    }
+    setFormData(data);
   };
 
   const classes = useStyles();
@@ -85,7 +74,7 @@ const Register = () => {
             <div>
               <label htmlFor="firstName">
                 {' '}
-                First Name
+                First Name *
                 <input
                   data-testid="input-firstName"
                   type="text"
@@ -105,7 +94,7 @@ const Register = () => {
             <div>
               <label htmlFor="lastName">
                 {' '}
-                Last Name
+                Last Name *
                 <input
                   type="text"
                   className={classes.input}
@@ -124,7 +113,7 @@ const Register = () => {
             <div>
               <label htmlFor="email">
                 {' '}
-                Email
+                Email *
                 <input
                   type="text"
                   name="email"
@@ -143,7 +132,7 @@ const Register = () => {
             <div>
               <label htmlFor="birthDay">
                 {' '}
-                Birthday
+                Birthday *
                 <input
                   type="text"
                   name="birthDay"
@@ -162,7 +151,7 @@ const Register = () => {
             <div>
               <label htmlFor="phoneNumber">
                 {' '}
-                Phone Number
+                Phone Number *
                 <input
                   type="tel"
                   name="phoneNumber"
@@ -182,7 +171,7 @@ const Register = () => {
             <div>
               <label htmlFor="password">
                 {' '}
-                Password
+                Password *
                 <input
                   type="password"
                   name="password"
@@ -191,6 +180,9 @@ const Register = () => {
                   ref={register}
                   onChange={(e) => handleChange(e)}
                 />
+                {errors.password && (
+                  <small className={classes.err}>{errors.password.message}</small>
+                )}
               </label>
             </div>
           </Grid>
@@ -198,7 +190,7 @@ const Register = () => {
             <div>
               <label htmlFor="confirmPassword">
                 {' '}
-                Confirm Password
+                Confirm Password *
                 <input
                   type="password"
                   name="confirmPassword"
@@ -207,9 +199,8 @@ const Register = () => {
                   ref={register}
                   onChange={(e) => handleChange(e)}
                 />
-                {emptyPass && <small className={classes.err}>Passwords required</small>}
-                {notSamePass && (
-                  <small className={classes.err}>Passwords not matching</small>
+                {errors.confirmPassword && (
+                  <small className={classes.err}>{errors.confirmPassword.message}</small>
                 )}
               </label>
             </div>
