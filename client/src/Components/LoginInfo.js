@@ -1,6 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import * as yup from 'yup';
+
+const editSchema = yup.object().shape({
+  email: yup.string().email('Valid email is required').required('Email is required'),
+  password: yup.string().required('Password is required').min(7, 'Password is too short'),
+});
 
 const useStyles = makeStyles({
   field: {
@@ -26,17 +33,40 @@ const useStyles = makeStyles({
     width: '112.5%',
     margin: 10,
     marginBottom: '5px',
+    '&:hover': {
+      opacity: '70%',
+    },
   },
-  p: {
+  err: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  text: {
     paddingLeft: '10px',
   },
 });
 
 const LoginInfo = () => {
+  const [formData, setFormData] = useState([]);
+  const { register, handleSubmit, errors } = useForm({
+    reValidateMode: 'onSubmit',
+    validationSchema: editSchema,
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = (data) => console.log(data);
+
   const classes = useStyles();
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.field}>
           <label htmlFor="email">
             {' '}
@@ -46,8 +76,11 @@ const LoginInfo = () => {
               className={classes.input}
               name="email"
               placeholder="Email"
+              ref={register}
+              onChange={(e) => handleChange(e)}
             />
           </label>
+          {errors.email && <small className={classes.err}>{errors.email.message}</small>}
         </div>
         <div className={classes.field}>
           <label htmlFor="password">
@@ -58,16 +91,21 @@ const LoginInfo = () => {
               className={classes.input}
               name="password"
               placeholder="Password"
+              ref={register}
+              onChange={(e) => handleChange(e)}
             />
           </label>
+          {errors.password && (
+            <small className={classes.err}>{errors.password.message}</small>
+          )}
         </div>
         <button type="submit" className={classes.btn}>
           LOGIN
         </button>
-        <p className={classes.p}>
-          {"Don't have an account? "} <Link to="/profile">Register Now</Link>
-        </p>
       </form>
+      <p className={classes.text}>
+        {"Don't have an account? "} <Link to="/profile">Register Now</Link>
+      </p>
     </div>
   );
 };
