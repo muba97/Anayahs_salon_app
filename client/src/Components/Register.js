@@ -67,7 +67,7 @@ const Register = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div data-testid="register">
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12} md={12}>
@@ -205,7 +205,7 @@ const Register = () => {
               </label>
             </div>
             <Grid item xs={12} md={12}>
-              <button type="submit" data-testid="edit-submit" className={classes.btn}>
+              <button type="submit" data-testid="signup-submit" className={classes.btn}>
                 SIGN UP
               </button>
             </Grid>

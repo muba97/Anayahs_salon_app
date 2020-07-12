@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="registerPage">
       <Grid container justify="center" alignItems="center">
         <Register />
       </Grid>
