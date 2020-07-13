@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import LoginInfo from '../Components/LoginInfo';
+import { Grid } from '@material-ui/core';
+import Login from '../Components/Login';
 
 const useStyles = makeStyles({
   root: {
@@ -21,9 +22,10 @@ const LoginPage = () => {
       <div className={classes.root}>
         <img alt="logo" src="/Anayah+Logo+transparent.png" className={classes.logo} />
       </div>
-      <div className={classes.root}>
-        <LoginInfo />
-      </div>
+      <Grid container justify="center" alignItems="center">
+        {' '}
+        <Login />
+      </Grid>
     </div>
   );
 };
