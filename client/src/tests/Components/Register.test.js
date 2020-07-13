@@ -84,7 +84,7 @@ describe('<Register /> Tests', () => {
     });
   });
 
-  test('Empty user input', async () => {
+  test('Empty user input error checks', async () => {
     const { getByTestId, getByLabelText } = render(
       <Router>
         <Register />
