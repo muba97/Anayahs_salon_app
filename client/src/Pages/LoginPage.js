@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 const LoginPage = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div data-testid="loginPage">
       <div className={classes.root}>
         <img alt="logo" src="/Anayah+Logo+transparent.png" className={classes.logo} />
       </div>

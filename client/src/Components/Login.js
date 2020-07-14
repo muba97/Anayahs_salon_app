@@ -63,7 +63,7 @@ const LoginInfo = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div data-testid="login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid item xs={12} md={12}>
           <div>
@@ -105,7 +105,7 @@ const LoginInfo = () => {
         </Grid>
         <Grid item xs={12} md={12}>
           {' '}
-          <button type="submit" className={classes.btn}>
+          <button type="submit" className={classes.btn} data-testid="loginBtn">
             LOGIN
           </button>
         </Grid>

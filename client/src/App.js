@@ -20,23 +20,6 @@ const client = new ApolloClient({
   link,
 });
 
-client
-  .query({
-    query: gql`
-      {
-        users {
-          id
-          firstName
-          lastName
-          email
-          phoneNumber
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
-
 const App = () => {
   return (
     <div className="App" data-testid="app">
@@ -45,10 +28,10 @@ const App = () => {
           <Navbar />
           <Switch>
             <Route exact path="/">
-              <LoginPage />
+              <ProfilePage />
             </Route>
             <Route exact path="/profile">
-              <ProfilePage />
+              <LoginPage />
             </Route>
           </Switch>
         </Router>
