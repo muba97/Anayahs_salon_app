@@ -3,11 +3,12 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient, gql } from 'apollo-boost';
+import { ApolloClient } from 'apollo-boost';
 import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
+import RegisterPage from './Pages/RegisterPage';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -16,25 +17,8 @@ const link = new HttpLink({
 
 const client = new ApolloClient({
   cache,
-  link
+  link,
 });
-
-client
-  .query({
-    query: gql`
-      {
-        users {
-          id
-          firstName
-          lastName
-          email
-          phoneNumber
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
 
 const App = () => {
   return (
@@ -45,6 +29,9 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <ProfilePage />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPage />
             </Route>
           </Switch>
         </Router>

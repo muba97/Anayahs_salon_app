@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 import ProfileInfo from '../Components/ProfileInfo';
 
 const userInfo = {
@@ -12,20 +13,17 @@ const userInfo = {
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 40,
+    marginTop: 40,
   },
 });
 
 const ProfilePage = () => {
   const classes = useStyles();
   return (
-    <div>
-      <div data-testid="profilePage" className={classes.root}>
+    <div className={classes.root} data-testid="profilePage">
+      <Grid container justify="center" alignItems="center">
         <ProfileInfo userInfo={userInfo} />
-      </div>
+      </Grid>
     </div>
   );
 };
