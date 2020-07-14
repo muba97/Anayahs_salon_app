@@ -22,7 +22,7 @@ describe('<ProfileInfo />', () => {
     expect(profileInfo).toBeInTheDocument();
   });
 
-  test('Input good info in form fields ', async () => {
+  test('should render no errors after good input', async () => {
     const { getByTestId, getByLabelText } = render(<ProfileInfo userInfo={userInfo} />);
 
     await act(async () => {
@@ -99,5 +99,150 @@ describe('<ProfileInfo />', () => {
 
     expect(firstNameInput.value).toBe('Bob');
     expect(lastNameInput.value).toBe('Builder');
+  });
+
+  test('should render all errors after empty input values', async () => {
+    const { getByTestId, getByLabelText, getByText } = render(
+      <ProfileInfo userInfo={userInfo} />
+    );
+
+    await act(async () => {
+      fireEvent.click(getByTestId('edit-submit'));
+    });
+
+    const firstNameInput = getByLabelText('First Name');
+    await act(async () => {
+      fireEvent.change(firstNameInput, { target: { id: 'firstName', value: '' } });
+    });
+    expect(firstNameInput.value).toBe('');
+
+    const lastNameInput = getByLabelText('Last Name');
+    await act(async () => {
+      fireEvent.change(lastNameInput, {
+        target: { id: 'lastName', value: '' },
+      });
+    });
+    expect(lastNameInput.value).toBe('');
+
+    const emailInput = getByLabelText('Email');
+    await act(async () => {
+      fireEvent.change(emailInput, {
+        target: { id: 'email', value: '' },
+      });
+    });
+    expect(emailInput.value).toBe('');
+
+    const birthDayInput = getByLabelText('Birthday');
+    await act(async () => {
+      fireEvent.change(birthDayInput, {
+        target: { id: 'birthDay', value: '' },
+      });
+    });
+    expect(birthDayInput.value).toBe('');
+
+    const phoneNumberInput = getByLabelText('Phone Number');
+    await act(async () => {
+      fireEvent.change(phoneNumberInput, {
+        target: { id: 'phoneNumber', value: '' },
+      });
+    });
+    expect(phoneNumberInput.value).toBe('');
+
+    await act(async () => {
+      fireEvent.submit(getByTestId('edit-submit'));
+    });
+
+    const firstNameError = getByText('First Name is Required');
+    expect(firstNameError).toBeInTheDocument();
+
+    const lastNameError = getByText('Last Name is Required');
+    expect(lastNameError).toBeInTheDocument();
+
+    const emailError = getByText('Email is Required');
+    expect(emailError).toBeInTheDocument();
+
+    const birthdayError = getByText('Date of Birth is required');
+    expect(birthdayError).toBeInTheDocument();
+
+    const phoneNumberError = getByText('Phone Number is required');
+    expect(phoneNumberError).toBeInTheDocument();
+
+    const cancelButton = getByTestId('cancelButton');
+    expect(cancelButton).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(getByTestId('cancelButton'));
+    });
+  });
+
+  test('should still show cancel button with partial filled form', async () => {
+    const { getByTestId, getByLabelText, getByText } = render(
+      <ProfileInfo userInfo={userInfo} />
+    );
+
+    await act(async () => {
+      fireEvent.click(getByTestId('edit-submit'));
+    });
+
+    const firstNameInput = getByLabelText('First Name');
+    await act(async () => {
+      fireEvent.change(firstNameInput, { target: { id: 'firstName', value: 'Test' } });
+    });
+    expect(firstNameInput.value).toBe('Test');
+
+    const lastNameInput = getByLabelText('Last Name');
+    await act(async () => {
+      fireEvent.change(lastNameInput, {
+        target: { id: 'lastName', value: '' },
+      });
+    });
+    expect(lastNameInput.value).toBe('');
+
+    const emailInput = getByLabelText('Email');
+    await act(async () => {
+      fireEvent.change(emailInput, {
+        target: { id: 'email', value: '' },
+      });
+    });
+    expect(emailInput.value).toBe('');
+
+    const birthDayInput = getByLabelText('Birthday');
+    await act(async () => {
+      fireEvent.change(birthDayInput, {
+        target: { id: 'birthDay', value: '' },
+      });
+    });
+    expect(birthDayInput.value).toBe('');
+
+    const phoneNumberInput = getByLabelText('Phone Number');
+    await act(async () => {
+      fireEvent.change(phoneNumberInput, {
+        target: { id: 'phoneNumber', value: '' },
+      });
+    });
+    expect(phoneNumberInput.value).toBe('');
+
+    await act(async () => {
+      fireEvent.click(getByTestId('edit-submit'));
+    });
+
+    const lastNameError = getByText('Last Name is Required');
+    expect(lastNameError).toBeInTheDocument();
+
+    const emailError = getByText('Email is Required');
+    expect(emailError).toBeInTheDocument();
+
+    const birthdayError = getByText('Date of Birth is required');
+    expect(birthdayError).toBeInTheDocument();
+
+    const phoneNumberError = getByText('Phone Number is required');
+    expect(phoneNumberError).toBeInTheDocument();
+
+    const cancelButton = getByTestId('cancelButton');
+    expect(cancelButton).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(getByTestId('cancelButton'));
+    });
   });
 });
