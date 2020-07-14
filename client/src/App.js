@@ -6,13 +6,14 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-boost';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import LoginPage from './Pages/LoginPage';
 import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 import RegisterPage from './Pages/RegisterPage';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'http://localhost:60001/graphql',
+  uri: 'http://localhost:4000/graphql',
 });
 
 const client = new ApolloClient({
@@ -29,6 +30,9 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <ProfilePage />
+            </Route>
+            <Route exact path="/profile">
+              <LoginPage />
             </Route>
             <Route exact path="/register">
               <RegisterPage />
