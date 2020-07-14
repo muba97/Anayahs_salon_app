@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   err: {
@@ -16,7 +17,7 @@ const PassErrorMsg = ({ message }) => {
   return (
     <div>
       {messageCheck ? (
-        <div>
+        <div data-testid="passErrMsg">
           <small className={classes.err}>- Minimum 7 Characters</small>
           <br />
           <small className={classes.err}>- At least one upper case</small>
@@ -28,10 +29,16 @@ const PassErrorMsg = ({ message }) => {
           <small className={classes.err}>- At least one special character</small>
         </div>
       ) : (
-        <small className={classes.err}>{message}</small>
+        <div data-testid="regPassErrMsg">
+          <small className={classes.err}>{message}</small>
+        </div>
       )}
     </div>
   );
+};
+
+PassErrorMsg.propTypes = {
+  message: PropTypes.string.isRequired,
 };
 
 export default PassErrorMsg;

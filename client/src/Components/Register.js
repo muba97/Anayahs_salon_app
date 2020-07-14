@@ -186,7 +186,12 @@ const Register = () => {
                   ref={register}
                   onChange={(e) => handleChange(e)}
                 />
-                {errors.password && <PassErrorMsg message={errors.password.message} />}
+                {errors.password && (
+                  <PassErrorMsg
+                    message={errors.password.message}
+                    data-testid="passErrMsg"
+                  />
+                )}
               </label>
             </div>
           </Grid>

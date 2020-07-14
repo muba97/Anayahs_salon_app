@@ -83,15 +83,10 @@ describe('<Register /> Tests', () => {
     await act(async () => {
       fireEvent.submit(getByTestId('signup-submit'));
     });
-
-    const passwordError = getByLabelText(
-      'At least one upper case, one lower case, one number, and one special character'
-    );
-    expect(passwordError).toBeInTheDocument();
   });
 
   test('Empty user input error checks', async () => {
-    const { getByTestId, getByLabelText } = render(
+    const { getByTestId, getByText } = render(
       <Router>
         <Register />
       </Router>
@@ -101,25 +96,53 @@ describe('<Register /> Tests', () => {
       fireEvent.submit(getByTestId('signup-submit'));
     });
 
-    const firstNameError = getByLabelText(/First Name is Required/i);
+    const firstNameError = getByText('First Name is Required');
     expect(firstNameError).toBeInTheDocument();
 
-    const lastNameError = getByLabelText(/Last Name is Required/i);
+    const lastNameError = getByText(/Last Name is Required/i);
     expect(lastNameError).toBeInTheDocument();
 
-    const emailError = getByLabelText(/Email is Required/i);
+    const emailError = getByText('Email is Required');
     expect(emailError).toBeInTheDocument();
 
-    const birthdayError = getByLabelText(/Enter a valid DOB/i);
+    const birthdayError = getByText('Date of Birth is required');
     expect(birthdayError).toBeInTheDocument();
 
-    const phoneNumberError = getByLabelText(/Enter Valid Phone Number/i);
+    const phoneNumberError = getByText('Phone Number is required');
     expect(phoneNumberError).toBeInTheDocument();
 
-    const passwordError = getByLabelText(/Minimum 7 characters/i);
+    const passwordError = getByText('Password is required');
     expect(passwordError).toBeInTheDocument();
 
-    const passwordConfirmError = getByLabelText(/Confirm Password Required/i);
+    const passwordConfirmError = getByText('Confirm Password Required');
     expect(passwordConfirmError).toBeInTheDocument();
+
+    // const passworddError = getByLabelText(
+    //   'At least one upper case, one lower case, one number, and one special character'
+    // );
+    // expect(passwordError).toBeInTheDocument();
+  });
+
+  test('should render password error message for partial input', async () => {
+    const { getByTestId, getByLabelText } = render(
+      <Router>
+        <Register />
+      </Router>
+    );
+
+    const passwordInput = getByLabelText('Password *');
+    await act(async () => {
+      fireEvent.change(passwordInput, {
+        target: { id: 'password', value: 'pass' },
+      });
+    });
+    expect(passwordInput.value).toBe('pass');
+
+    await act(async () => {
+      fireEvent.submit(getByTestId('signup-submit'));
+    });
+
+    const passwordError = getByTestId('passErrMsg');
+    expect(passwordError).toBeInTheDocument();
   });
 });

@@ -46,11 +46,13 @@ const useStyles = makeStyles({
   },
 });
 
-const emptyKeysObj = (obj) => {
-  Object.keys(obj).every((key) => {
-    return obj[key] === '';
-  });
-};
+// const emptyKeysObj = (obj) => {
+//   console.log('In emptyKeysObj()');
+//   const emptyObj = Object.keys(obj).every((key) => {
+//     return obj[key] === '';
+//   });
+//   return emptyObj;
+// };
 
 const ProfileInfo = ({ userInfo }) => {
   const [finalData, setFinalData] = useState(userInfo);
@@ -84,12 +86,7 @@ const ProfileInfo = ({ userInfo }) => {
   };
 
   const handleClick = () => {
-    console.log('Edit in handle Click before change: ', edit);
-    if (emptyKeysObj(formData)) {
-      setEdit(true);
-    }
-    setEdit(false);
-    console.log('Edit in handle Click after change: ', edit);
+    setEdit(!edit);
   };
 
   const classes = useStyles();

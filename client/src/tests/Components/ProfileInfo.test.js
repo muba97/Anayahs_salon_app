@@ -102,7 +102,9 @@ describe('<ProfileInfo />', () => {
   });
 
   test('Empty user input', async () => {
-    const { getByTestId, getByLabelText } = render(<ProfileInfo userInfo={userInfo} />);
+    const { getByTestId, getByLabelText, getByText } = render(
+      <ProfileInfo userInfo={userInfo} />
+    );
 
     await act(async () => {
       fireEvent.click(getByTestId('edit-submit'));
@@ -150,19 +152,19 @@ describe('<ProfileInfo />', () => {
       fireEvent.submit(getByTestId('edit-submit'));
     });
 
-    const firstNameError = getByLabelText(/First Name is Required/i);
+    const firstNameError = getByText('First Name is Required');
     expect(firstNameError).toBeInTheDocument();
 
-    const lastNameError = getByLabelText(/Last Name is Required/i);
+    const lastNameError = getByText('Last Name is Required');
     expect(lastNameError).toBeInTheDocument();
 
-    const emailError = getByLabelText(/Email is Required/i);
+    const emailError = getByText('Email is Required');
     expect(emailError).toBeInTheDocument();
 
-    const birthdayError = getByLabelText(/Enter a valid DOB/i);
+    const birthdayError = getByText('Date of Birth is required');
     expect(birthdayError).toBeInTheDocument();
 
-    const phoneNumberError = getByLabelText(/Enter Valid Phone Number/i);
+    const phoneNumberError = getByText('Phone Number is required');
     expect(phoneNumberError).toBeInTheDocument();
 
     await act(async () => {
