@@ -167,9 +167,79 @@ describe('<ProfileInfo />', () => {
     const phoneNumberError = getByText('Phone Number is required');
     expect(phoneNumberError).toBeInTheDocument();
 
+    const cancelButton = getByTestId('cancelButton');
+    expect(cancelButton).toBeInTheDocument();
+
     await act(async () => {
-      fireEvent.submit(getByTestId('edit-submit'));
+      fireEvent.click(getByTestId('cancelButton'));
     });
+  });
+
+  test('partial form input and submit', async () => {
+    const { getByTestId, getByLabelText, getByText } = render(
+      <ProfileInfo userInfo={userInfo} />
+    );
+
+    await act(async () => {
+      fireEvent.click(getByTestId('edit-submit'));
+    });
+
+    const firstNameInput = getByLabelText('First Name');
+    await act(async () => {
+      fireEvent.change(firstNameInput, { target: { id: 'firstName', value: 'Test' } });
+    });
+    expect(firstNameInput.value).toBe('Test');
+
+    const lastNameInput = getByLabelText('Last Name');
+    await act(async () => {
+      fireEvent.change(lastNameInput, {
+        target: { id: 'lastName', value: '' },
+      });
+    });
+    expect(lastNameInput.value).toBe('');
+
+    const emailInput = getByLabelText('Email');
+    await act(async () => {
+      fireEvent.change(emailInput, {
+        target: { id: 'email', value: '' },
+      });
+    });
+    expect(emailInput.value).toBe('');
+
+    const birthDayInput = getByLabelText('Birthday');
+    await act(async () => {
+      fireEvent.change(birthDayInput, {
+        target: { id: 'birthDay', value: '' },
+      });
+    });
+    expect(birthDayInput.value).toBe('');
+
+    const phoneNumberInput = getByLabelText('Phone Number');
+    await act(async () => {
+      fireEvent.change(phoneNumberInput, {
+        target: { id: 'phoneNumber', value: '' },
+      });
+    });
+    expect(phoneNumberInput.value).toBe('');
+
+    await act(async () => {
+      fireEvent.click(getByTestId('edit-submit'));
+    });
+
+    const lastNameError = getByText('Last Name is Required');
+    expect(lastNameError).toBeInTheDocument();
+
+    const emailError = getByText('Email is Required');
+    expect(emailError).toBeInTheDocument();
+
+    const birthdayError = getByText('Date of Birth is required');
+    expect(birthdayError).toBeInTheDocument();
+
+    const phoneNumberError = getByText('Phone Number is required');
+    expect(phoneNumberError).toBeInTheDocument();
+
+    const cancelButton = getByTestId('cancelButton');
+    expect(cancelButton).toBeInTheDocument();
 
     await act(async () => {
       fireEvent.click(getByTestId('cancelButton'));

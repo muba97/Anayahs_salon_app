@@ -46,16 +46,22 @@ const useStyles = makeStyles({
   },
 });
 
-// const emptyKeysObj = (obj) => {
-//   console.log('In emptyKeysObj()');
-//   const emptyObj = Object.keys(obj).every((key) => {
-//     return obj[key] === '';
-//   });
-//   return emptyObj;
-// };
+const emptyKeysObj = (obj) => {
+  const emptyObj = Object.keys(obj).every((key) => {
+    return obj[key] === '';
+  });
+  return emptyObj;
+};
+
+const atLeastOneEmpty = (obj) => {
+  const oneFound = Object.keys(obj).some((key) => {
+    return obj[key] === '';
+  });
+  return oneFound;
+};
 
 const ProfileInfo = ({ userInfo }) => {
-  const [finalData, setFinalData] = useState(userInfo);
+  const [initialData, setinitialData] = useState(userInfo);
   const [formData, setFormData] = useState(userInfo);
   const [edit, setEdit] = useState(true);
   const { register, handleSubmit, errors, reset } = useForm({
@@ -72,21 +78,25 @@ const ProfileInfo = ({ userInfo }) => {
 
   const onSubmit = (data) => {
     if (edit !== false) {
-      setFinalData(data);
+      setinitialData(data);
       setFormData(data);
     }
   };
 
   const cancelClick = () => {
     setEdit(true);
-    reset(finalData);
-    if (finalData !== formData) {
-      setFormData(finalData);
+    reset(initialData);
+    if (initialData !== formData) {
+      setFormData(initialData);
     }
   };
 
   const handleClick = () => {
-    setEdit(!edit);
+    if (emptyKeysObj(formData) || atLeastOneEmpty(formData)) {
+      setEdit(false);
+    } else {
+      setEdit(!edit);
+    }
   };
 
   const classes = useStyles();
