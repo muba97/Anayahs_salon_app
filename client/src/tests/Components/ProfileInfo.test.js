@@ -22,7 +22,7 @@ describe('<ProfileInfo />', () => {
     expect(profileInfo).toBeInTheDocument();
   });
 
-  test('Input good info in form fields ', async () => {
+  test('should render no errors after good input', async () => {
     const { getByTestId, getByLabelText } = render(<ProfileInfo userInfo={userInfo} />);
 
     await act(async () => {
@@ -101,7 +101,7 @@ describe('<ProfileInfo />', () => {
     expect(lastNameInput.value).toBe('Builder');
   });
 
-  test('Empty user input', async () => {
+  test('should render all errors after empty input values', async () => {
     const { getByTestId, getByLabelText, getByText } = render(
       <ProfileInfo userInfo={userInfo} />
     );
@@ -175,7 +175,7 @@ describe('<ProfileInfo />', () => {
     });
   });
 
-  test('partial form input and submit', async () => {
+  test('should still show cancel button with partial filled form', async () => {
     const { getByTestId, getByLabelText, getByText } = render(
       <ProfileInfo userInfo={userInfo} />
     );

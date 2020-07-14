@@ -53,7 +53,7 @@ const emptyKeysObj = (obj) => {
   return emptyObj;
 };
 
-const atLeastOneEmpty = (obj) => {
+const atLeastOneEmptyKey = (obj) => {
   const oneFound = Object.keys(obj).some((key) => {
     return obj[key] === '';
   });
@@ -92,7 +92,7 @@ const ProfileInfo = ({ userInfo }) => {
   };
 
   const handleClick = () => {
-    if (emptyKeysObj(formData) || atLeastOneEmpty(formData)) {
+    if (emptyKeysObj(formData) || atLeastOneEmptyKey(formData)) {
       setEdit(false);
     } else {
       setEdit(!edit);
