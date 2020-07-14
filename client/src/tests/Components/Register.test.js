@@ -25,6 +25,7 @@ describe('<Register /> Tests', () => {
         <Register />
       </Router>
     );
+
     const firstNameInput = getByLabelText('First Name *');
     await act(async () => {
       fireEvent.change(firstNameInput, { target: { id: 'firstName', value: 'John' } });
@@ -66,22 +67,27 @@ describe('<Register /> Tests', () => {
     const passwordInput = getByLabelText('Password *');
     await act(async () => {
       fireEvent.change(passwordInput, {
-        target: { id: 'password', value: 'password' },
+        target: { id: 'password', value: 'P@ssw0rd' },
       });
     });
-    expect(passwordInput.value).toBe('password');
+    expect(passwordInput.value).toBe('P@ssw0rd');
 
     const passwordConfirmInput = getByLabelText('Confirm Password *');
     await act(async () => {
       fireEvent.change(passwordConfirmInput, {
-        target: { id: 'passwordConfirm', value: 'password' },
+        target: { id: 'passwordConfirm', value: 'P@ssw0rd' },
       });
     });
-    expect(passwordConfirmInput.value).toBe('password');
+    expect(passwordConfirmInput.value).toBe('P@ssw0rd');
 
     await act(async () => {
       fireEvent.submit(getByTestId('signup-submit'));
     });
+
+    const passwordError = getByLabelText(
+      'At least one upper case, one lower case, one number, and one special character'
+    );
+    expect(passwordError).toBeInTheDocument();
   });
 
   test('Empty user input error checks', async () => {
@@ -110,7 +116,7 @@ describe('<Register /> Tests', () => {
     const phoneNumberError = getByLabelText(/Enter Valid Phone Number/i);
     expect(phoneNumberError).toBeInTheDocument();
 
-    const passwordError = getByLabelText(/minimum 7 characters/i);
+    const passwordError = getByLabelText(/Minimum 7 characters/i);
     expect(passwordError).toBeInTheDocument();
 
     const passwordConfirmError = getByLabelText(/Confirm Password Required/i);

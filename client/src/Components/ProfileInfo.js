@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 import { profileSchema } from '../utils/yupSchemas';
 
 const useStyles = makeStyles({
   field: {
-    margin: 10,
+    flexWrap: 'wrap',
+    minWidth: '16em',
+    maxWidth: '16em',
   },
   input: {
     display: 'block',
     boxSizing: 'border-box',
-    width: '120%',
-    borderRadius: '4px',
-    border: '1px solid gray',
-    padding: '10px 15px',
-    marginBottom: 20,
+    borderRadius: '0.25em',
+    marginBottom: 10,
+    width: '100%',
+    border: '0.0625em solid gray',
+    padding: '0.625em 0.9375em',
     fontSize: '12px',
     '&:disabled': {
       opacity: '40%',
@@ -24,13 +27,13 @@ const useStyles = makeStyles({
   btn: {
     background: '#000000',
     border: 0,
-    borderRadius: 3,
+    borderRadius: '0.25em',
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
     height: 40,
-    width: '107.5%',
-    margin: 10,
-    marginBottom: '5px',
+    width: '100%',
+    marginTop: '0.3125em',
+    marginBottom: '0.3125em',
     '&:disabled': {
       opacity: '40%',
     },
@@ -42,6 +45,12 @@ const useStyles = makeStyles({
     color: 'red',
   },
 });
+
+const emptyKeysObj = (obj) => {
+  Object.keys(obj).every((key) => {
+    return obj[key] === '';
+  });
+};
 
 const ProfileInfo = ({ userInfo }) => {
   const [finalData, setFinalData] = useState(userInfo);
@@ -75,128 +84,147 @@ const ProfileInfo = ({ userInfo }) => {
   };
 
   const handleClick = () => {
-    setEdit(!edit);
+    console.log('Edit in handle Click before change: ', edit);
+    if (emptyKeysObj(formData)) {
+      setEdit(true);
+    }
+    setEdit(false);
+    console.log('Edit in handle Click after change: ', edit);
   };
 
   const classes = useStyles();
 
   return (
-    <div data-testid="profileInfo">
+    <div className={classes.field} data-testid="profileInfo">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={classes.field}>
-          <label htmlFor="firstName">
-            {' '}
-            First Name
-            <input
-              data-testid="input-firstName"
-              type="text"
-              className={classes.input}
-              name="firstName"
-              placeholder="First Name"
-              defaultValue={formData.firstName}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-            {errors.firstName && (
-              <small className={classes.err}>{errors.firstName.message}</small>
-            )}
-          </label>
-        </div>
-        <div className={classes.field}>
-          <label htmlFor="lastName">
-            {' '}
-            Last Name
-            <input
-              type="text"
-              className={classes.input}
-              name="lastName"
-              placeholder="Last Name"
-              defaultValue={formData.lastName}
-              disabled={edit}
-              ref={register}
-              onChange={(e) => handleChange(e)}
-            />
-            {errors.lastName && (
-              <small className={classes.err}>{errors.lastName.message}</small>
-            )}
-          </label>
-        </div>
-        <div className={classes.field}>
-          <label htmlFor="email">
-            {' '}
-            Email
-            <input
-              type="text"
-              name="email"
-              placeholder="example@email.com"
-              defaultValue={formData.email}
-              className={classes.input}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-            {errors.email && (
-              <small className={classes.err}>{errors.email.message}</small>
-            )}
-          </label>
-        </div>
-        <div className={classes.field}>
-          <label htmlFor="birthDay">
-            {' '}
-            Birthday
-            <input
-              type="text"
-              name="birthDay"
-              placeholder="mm/dd/yyyy"
-              defaultValue={formData.birthDay}
-              className={classes.input}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-            {errors.birthDay && (
-              <small className={classes.err}>{errors.birthDay.message}</small>
-            )}
-          </label>
-        </div>
-        <div className={classes.field}>
-          <label htmlFor="phoneNumber">
-            {' '}
-            Phone Number
-            <input
-              type="tel"
-              name="phoneNumber"
-              placeholder="xxx-xxx-xxx"
-              max={12}
-              defaultValue={formData.phoneNumber}
-              className={classes.input}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-            {errors.phoneNumber && (
-              <small className={classes.err}>{errors.phoneNumber.message}</small>
-            )}
-          </label>
-        </div>
-        <button
-          type="submit"
-          data-testid="edit-submit"
-          onClick={() => handleClick()}
-          className={classes.btn}
-        >
-          {edit ? 'EDIT' : 'SUBMIT'}
-        </button>
-        {!edit && (
+        <Grid item xs={12} md={12}>
+          <div>
+            <label htmlFor="firstName">
+              {' '}
+              First Name
+              <input
+                data-testid="input-firstName"
+                type="text"
+                className={classes.input}
+                name="firstName"
+                placeholder="First Name"
+                defaultValue={formData.firstName}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.firstName && (
+                <small className={classes.err}>{errors.firstName.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <div>
+            <label htmlFor="lastName">
+              {' '}
+              Last Name
+              <input
+                type="text"
+                className={classes.input}
+                name="lastName"
+                placeholder="Last Name"
+                defaultValue={formData.lastName}
+                disabled={edit}
+                ref={register}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.lastName && (
+                <small className={classes.err}>{errors.lastName.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <div>
+            <label htmlFor="email">
+              {' '}
+              Email
+              <input
+                type="text"
+                name="email"
+                placeholder="example@email.com"
+                defaultValue={formData.email}
+                className={classes.input}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.email && (
+                <small className={classes.err}>{errors.email.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <div>
+            <label htmlFor="birthDay">
+              {' '}
+              Birthday
+              <input
+                type="text"
+                name="birthDay"
+                placeholder="mm/dd/yyyy"
+                defaultValue={formData.birthDay}
+                className={classes.input}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.birthDay && (
+                <small className={classes.err}>{errors.birthDay.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <div>
+            <label htmlFor="phoneNumber">
+              {' '}
+              Phone Number
+              <input
+                type="tel"
+                name="phoneNumber"
+                placeholder="xxx-xxx-xxx"
+                max={12}
+                defaultValue={formData.phoneNumber}
+                className={classes.input}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.phoneNumber && (
+                <small className={classes.err}>{errors.phoneNumber.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={12}>
           <button
-            data-testid="cancelButton"
-            type="button"
-            onClick={() => cancelClick()}
+            type="submit"
+            data-testid="edit-submit"
+            onClick={() => handleClick()}
             className={classes.btn}
           >
-            CANCEL
+            {edit ? 'EDIT' : 'SUBMIT'}
           </button>
+        </Grid>
+        {!edit && (
+          <Grid item xs={12} md={12}>
+            <button
+              data-testid="cancelButton"
+              type="button"
+              onClick={() => cancelClick()}
+              className={classes.btn}
+            >
+              CANCEL
+            </button>
+          </Grid>
         )}
       </form>
     </div>

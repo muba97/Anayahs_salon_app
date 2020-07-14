@@ -4,8 +4,14 @@ import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { registerSchema } from '../utils/yupSchemas';
+import PassErrorMsg from './PassErrorMsg';
 
 const useStyles = makeStyles({
+  field: {
+    flexWrap: 'wrap',
+    minWidth: '16em',
+    maxWidth: '16em',
+  },
   input: {
     display: 'block',
     boxSizing: 'border-box',
@@ -48,7 +54,7 @@ const useStyles = makeStyles({
 
 const Register = () => {
   const [formData, setFormData] = useState([]);
-  const { register, handleSubmit, errors, reset } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     reValidateMode: 'onSubmit',
     validationSchema: registerSchema,
   });
@@ -67,7 +73,7 @@ const Register = () => {
   const classes = useStyles();
 
   return (
-    <div data-testid="register">
+    <div data-testid="register" className={classes.field}>
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12} md={12}>
@@ -180,9 +186,7 @@ const Register = () => {
                   ref={register}
                   onChange={(e) => handleChange(e)}
                 />
-                {errors.password && (
-                  <small className={classes.err}>{errors.password.message}</small>
-                )}
+                {errors.password && <PassErrorMsg message={errors.password.message} />}
               </label>
             </div>
           </Grid>
