@@ -87,7 +87,6 @@ const Services = ({ label, items }) => {
   };
 
   function handleOnClick(item) {}
-  console.log('Hello World');
 
   const classes = useStyle();
   return (
