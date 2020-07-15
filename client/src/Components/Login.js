@@ -113,7 +113,7 @@ const LoginInfo = () => {
       <div className={classes.text}>
         <small>
           {"Don't have an account? "}
-          <Link to="/profile" className={classes.text}>
+          <Link to="/register" className={classes.text}>
             Register Now
           </Link>
         </small>
