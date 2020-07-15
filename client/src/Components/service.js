@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
@@ -80,43 +80,28 @@ const Services = ({ serviceLabels, items }) => {
   const [serviceData, setServiceData] = useState(items);
   const [edit, setEdit] = useState([]);
   const [show, setShow] = useState([]);
-  const clear = [];
+  const [selection, setSelection] = useState([]);
+  const toggle = () => setOpen(!open);
 
-  const handleChange = (e) => {
-    setServiceData({
-      ...serviceData,
-      [e.target.name]: e.target.value,
-    });
+  const handleClick = (service) => {
+    toggle(!open);
   };
-  function handleOnClick(label) {
-    for (let i = 0; i < items.length; i++) {
-      if (label === items[i].label) {
-        setShow(show => [...show, items[i]]);
-      }
-    }
-    setOpen(!open);
-    if (open === true) {
-      setShow([clear]);
-    }
-  }
+  console.log(items)
 
   const classes = useStyle();
   return (
     <div data-testid="serviceInfo">
-      {serviceLabels.map((labels) => (
-        <div className={classes.btn} onClick={() => handleOnClick(labels)}>
-          <div className={classes.field}>
-            <p className={classes.field}>{labels}</p>
-          </div>
-          <div className={classes.field}>
-            <p>{open ? 'Close' : 'Open'}</p>
-            <script> console.log(labels)</script>
-          </div>
+      <div className={classes.btn} onClick={() => toggle(!open)}>
+        <div className={classes.field}>
+          <p className={classes.field}>{serviceLabels}</p>
         </div>
-      ))}
+        <div className={classes.field}>
+          <p>{open ? 'Close' : 'Open'}</p>
+        </div>
+      </div>
       {open && (
         <ul className={classes.field}>
-          {show.map((item) => (
+          {items.map((item) => (
             <li className={classes.span} key={item.id}>
               <span className={classes.item}>Service: {item.title}</span>
               <span className={classes.item}>Service length: {item.time}</span>
