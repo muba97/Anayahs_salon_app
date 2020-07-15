@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import ProfileInfo from '../Components/ProfileInfo';
-import ChangePass from '../Components/ChangePass';
 
 const userInfo = {
   firstName: 'Mubashir',

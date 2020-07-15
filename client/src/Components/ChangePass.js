@@ -86,8 +86,8 @@ const ChangePass = () => {
                 ref={register}
                 onChange={(e) => handleChange(e)}
               />
-              {errors.firstName && (
-                <small className={classes.err}>{errors.firstName.message}</small>
+              {errors.oldPassword && (
+                <small className={classes.err}>{errors.oldPassword.message}</small>
               )}
             </label>
           </div>
@@ -104,9 +104,9 @@ const ChangePass = () => {
                 ref={register}
                 onChange={(e) => handleChange(e)}
               />
-              {errors.lastName && (
+              {errors.newPassword && (
                 <PassErrorMsg
-                  message={errors.password.message}
+                  message={errors.newPassword.message}
                   data-testid="passErrMsg"
                 />
               )}
@@ -125,15 +125,15 @@ const ChangePass = () => {
                 ref={register}
                 onChange={(e) => handleChange(e)}
               />
-              {errors.email && (
-                <small className={classes.err}>{errors.email.message}</small>
+              {errors.confirmPassword && (
+                <small className={classes.err}>{errors.confirmPassword.message}</small>
               )}
             </label>
           </div>
         </Grid>
         <Grid item xs={12} md={12}>
           <button type="submit" data-testid="signup-submit" className={classes.btn}>
-            SIGN UP
+            CHANGE PASSWORD
           </button>
         </Grid>
       </form>

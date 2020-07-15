@@ -45,6 +45,9 @@ const useStyles = makeStyles({
   err: {
     color: 'red',
   },
+  password: {
+    paddingTop: 30,
+  },
 });
 
 const emptyKeysObj = (obj) => {
@@ -235,7 +238,10 @@ const ProfileInfo = ({ userInfo }) => {
           </Grid>
         )}
       </form>
-      <ChangePass />
+      <div className={classes.password}>
+        {' '}
+        <ChangePass />
+      </div>
     </div>
   );
 };
