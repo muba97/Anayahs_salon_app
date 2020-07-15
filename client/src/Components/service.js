@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { mergeClasses } from '@material-ui/styles';
+import PropTypes from 'prop-types';
 
 const useStyle = makeStyles({
   field: {
@@ -46,7 +46,7 @@ const useStyle = makeStyles({
     borderRadius: '4px',
     border: '1px solid gray',
     padding: '10px 15px',
-    marginBottom: 20,
+    marginBottom: 10,
     fontSize: '12px',
     float: 'left',
     '&:disabled': {
@@ -59,8 +59,10 @@ const useStyle = makeStyles({
     textAlign: 'left',
     display: 'flex',
     background: '#000000',
+    borderRadius: '4px',
     borderLeft: '1px solid',
     borderRight: '1px solid',
+    marginBottom: 5,
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
     width: '97%',
@@ -73,11 +75,12 @@ const useStyle = makeStyles({
     },
   },
 });
-const Services = ({ label, items }) => {
+const Services = ({ serviceLabels, items }) => {
   const [open, setOpen] = useState(false);
   const [serviceData, setServiceData] = useState(items);
   const [edit, setEdit] = useState([]);
-  const toggle = () => setOpen(!open);
+  const [show, setShow] = useState([]);
+  const clear = [];
 
   const handleChange = (e) => {
     setServiceData({
@@ -85,40 +88,41 @@ const Services = ({ label, items }) => {
       [e.target.name]: e.target.value,
     });
   };
-
-  function handleOnClick(item) {}
+  function handleOnClick(label) {
+    for (let i = 0; i < items.length; i++) {
+      if (label === items[i].label) {
+        setShow(show => [...show, items[i]]);
+      }
+    }
+    setOpen(!open);
+    if (open === true) {
+      setShow([clear]);
+    }
+  }
 
   const classes = useStyle();
   return (
     <div data-testid="serviceInfo">
-      <div
-        tabIndex={0}
-        className={classes.field}
-        role="button"
-        onKeyPress={() => toggle(!open)}
-        onClick={() => toggle(!open)}
-        className={classes.btn}
-      >
-        <div className={classes.field}>
-          <p className={classes.field}>{label}</p>
+      {serviceLabels.map((labels) => (
+        <div className={classes.btn} onClick={() => handleOnClick(labels)}>
+          <div className={classes.field}>
+            <p className={classes.field}>{labels}</p>
+          </div>
+          <div className={classes.field}>
+            <p>{open ? 'Close' : 'Open'}</p>
+            <script> console.log(labels)</script>
+          </div>
         </div>
-        <div className={classes.field}>
-          <p>{open ? 'Close' : 'Open'}</p>
-        </div>
-      </div>
+      ))}
       {open && (
         <ul className={classes.field}>
-          {items.map((item) => (
+          {show.map((item) => (
             <li className={classes.span} key={item.id}>
               <span className={classes.item}>Service: {item.title}</span>
               <span className={classes.item}>Service length: {item.time}</span>
               <span className={classes.item}>Price: ${item.price}</span>
               <span className={classes.item}>Description: {item.description}</span>
-              <button
-                className={classes.smallBtn}
-                type="button"
-                onClick={() => handleOnClick(item)}
-              >
+              <button className={classes.smallBtn} type="button">
                 edit
               </button>
             </li>
@@ -127,6 +131,18 @@ const Services = ({ label, items }) => {
       )}
     </div>
   );
+};
+Services.propTypes = {
+  serviceLabels: PropTypes.shape({
+    labels: PropTypes.string,
+  }).isRequired,
+  items: PropTypes.shape({
+    title: PropTypes.string,
+    time: PropTypes.string,
+    price: PropTypes.string,
+    description: PropTypes.string,
+    label: PropTypes.string,
+  }).isRequired,
 };
 
 export default Services;
