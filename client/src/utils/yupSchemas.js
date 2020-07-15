@@ -39,6 +39,11 @@ export const registerSchema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords do not match'),
 });
 
+export const loginSchema = yup.object().shape({
+  email: yup.string().email('Valid email is required').required('Email is required'),
+  password: yup.string().required('Password is required'),
+});
+
 export const profileSchema = yup.object().shape({
   firstName: yup
     .string()
@@ -64,4 +69,19 @@ export const profileSchema = yup.object().shape({
       'Enter Valid Phone Number'
     )
     .max(12, 'Must be 10 digits'),
+});
+
+export const passwordSchema = yup.object().shape({
+  oldPassword: yup.string().required('Old Password is required'),
+  newPassword: yup
+    .string()
+    .required('New Password is required')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
+      'Minimum 7 characters, At least one upper case, one lower case, one number, and one special character'
+    ),
+  confirmPassword: yup
+    .string()
+    .required('Confirm Password is required')
+    .oneOf([yup.ref('newPassword')], 'Passwords do not match'),
 });
