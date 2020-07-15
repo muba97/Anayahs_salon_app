@@ -29,10 +29,10 @@ const App = () => {
           <Navbar />
           <Switch>
             <Route exact path="/">
-              <ProfilePage />
+              <LoginPage />
             </Route>
             <Route exact path="/profile">
-              <LoginPage />
+              <ProfilePage />
             </Route>
             <Route exact path="/register">
               <RegisterPage />
