@@ -1,35 +1,50 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
+import { Grid } from '@material-ui/core';
+import * as yup from 'yup';
+import ServiceItems from './items';
+
+const editSchema = yup.object().shape({
+  title: yup.string().required('Title is Required'),
+  time: yup.string().required('Time is Required'),
+  price: yup.string().required('Price is Required'),
+  description: yup.string().required('Description is required'),
+});
 
 const useStyle = makeStyles({
   field: {
     margin: 10,
   },
   item: {
-    width: '85%',
+    justifyContent: 'center',
     display: 'block',
-    fontSize: '15px',
     boxSizing: 'border-box',
-    borderRadius: '1px',
-    border: '1px solid black',
-    padding: '8px 11px',
-    marginBottom: 3,
-    float: 'left',
+    width: '50%',
+    borderRadius: '4px',
+    border: '1px solid gray',
+    padding: '7px 10px',
+    marginBottom: 5,
+    float: 'top',
+    fontSize: '12px',
     '&:disabled': {
       opacity: '40%',
     },
   },
   smallBtn: {
-    justifyContent: 'center',
-    display: 'flex',
     background: '#000000',
+    justifyContent: 'center',
+    float: 'right',
+    display: 'flex',
     borderLeft: '1px solid',
     borderRight: '1px solid',
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
-    width: '15%',
-    padding: '20px 25px 20px 25px',
+    height: 40,
+    width: '40%',
+    padding: '8px 11px',
+    marginBottom: 2,
     fontSize: '13px',
     '&:disabled': {
       opacity: '40%',
@@ -38,11 +53,15 @@ const useStyle = makeStyles({
       opacity: '70%',
     },
   },
+  err: {
+    color: 'red',
+  },
   span: {
     textAlign: 'left',
+    justifyContent: 'center',
     display: 'block',
     boxSizing: 'border-box',
-    width: '100%',
+    width: '90%',
     borderRadius: '4px',
     border: '1px solid gray',
     padding: '10px 15px',
@@ -77,40 +96,62 @@ const useStyle = makeStyles({
 });
 const Services = ({ serviceLabels, items }) => {
   const [open, setOpen] = useState(false);
+  const [initData, setInitData] = useState(items);
   const [serviceData, setServiceData] = useState(items);
-  const [edit, setEdit] = useState([]);
-  const [show, setShow] = useState([]);
-  const [selection, setSelection] = useState([]);
+  const [edit, setEdit] = useState(true);
+  const { register, handleSubmit, errors, reset } = useForm({
+    validationSchema: editSchema,
+  });
   const toggle = () => setOpen(!open);
-
-  const handleClick = (service) => {
-    toggle(!open);
+  const handleData = (e) => {
+    setServiceData(e);
+    setInitData(e);
   };
-  console.log(items)
+  const onSubmit = (data) => {
+    if (edit !== false) {
+      setInitData(data);
+      setServiceData(data);
+    }
+  };
+  const handleChange = (e) => {
+    setServiceData({
+      ...serviceData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const cancelClick = () => {
+    setEdit(true);
+    reset(initData);
+    if (initData !== serviceData) {
+      setServiceData(initData);
+    }
+  };
+
+  const handleClick = () => {
+    setEdit(!edit);
+  };
+
+  // serviceData.map((item) => {
+  //   console.log('-', item.id);
+  // });
 
   const classes = useStyle();
   return (
     <div data-testid="serviceInfo">
-      <div className={classes.btn} onClick={() => toggle(!open)}>
+      <button className={classes.btn} type="button" onClick={() => toggle()}>
         <div className={classes.field}>
           <p className={classes.field}>{serviceLabels}</p>
         </div>
         <div className={classes.field}>
           <p>{open ? 'Close' : 'Open'}</p>
         </div>
-      </div>
+      </button>
       {open && (
         <ul className={classes.field}>
           {items.map((item) => (
-            <li className={classes.span} key={item.id}>
-              <span className={classes.item}>Service: {item.title}</span>
-              <span className={classes.item}>Service length: {item.time}</span>
-              <span className={classes.item}>Price: ${item.price}</span>
-              <span className={classes.item}>Description: {item.description}</span>
-              <button className={classes.smallBtn} type="button">
-                edit
-              </button>
-            </li>
+            <div data-testid="services" className={classes.root}>
+              <ServiceItems items={item} />
+            </div>
           ))}
         </ul>
       )}

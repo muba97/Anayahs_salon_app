@@ -78,6 +78,7 @@ const ProfileInfo = ({ userInfo }) => {
     validationSchema: editSchema,
   });
 
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,
