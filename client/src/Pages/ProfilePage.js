@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import ProfileInfo from '../Components/ProfileInfo';
+import ChangePass from '../Components/ChangePass';
 
 const userInfo = {
   firstName: 'Mubashir',
@@ -23,6 +24,10 @@ const ProfilePage = () => {
     <div className={classes.root} data-testid="profilePage">
       <Grid container justify="center" alignItems="center">
         <ProfileInfo userInfo={userInfo} />
+      </Grid>
+      <br />
+      <Grid container justify="center" alignItems="center">
+        <ChangePass />
       </Grid>
     </div>
   );

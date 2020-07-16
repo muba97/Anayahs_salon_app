@@ -53,10 +53,12 @@ const useStyles = makeStyles({
 
 const ChangePass = () => {
   const [formData, setFormData] = useState([]);
+  const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     reValidateMode: 'onSubmit',
     validationSchema: passwordSchema,
   });
+  const toggle = () => setOpen(!open);
 
   const handleChange = (e) => {
     setFormData({
@@ -72,71 +74,78 @@ const ChangePass = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid item xs={12} md={12}>
-          <div>
-            <label htmlFor="oldPassword">
-              {' '}
-              Old Password
-              <input
-                type="password"
-                className={classes.input}
-                name="oldPassword"
-                ref={register}
-                onChange={(e) => handleChange(e)}
-              />
-              {errors.oldPassword && (
-                <small className={classes.err}>{errors.oldPassword.message}</small>
-              )}
-            </label>
-          </div>
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <div>
-            <label htmlFor="newPassword">
-              {' '}
-              New Password
-              <input
-                type="password"
-                className={classes.input}
-                name="newPassword"
-                ref={register}
-                onChange={(e) => handleChange(e)}
-              />
-              {errors.newPassword && (
-                <PassErrorMsg
-                  message={errors.newPassword.message}
-                  data-testid="passErrMsg"
+    <div className={classes.field}>
+      <Grid item xs={12} md={12}>
+        <button type="button" className={classes.btn} onClick={() => toggle()}>
+          CHANGE PASSWORD
+        </button>
+      </Grid>
+      {open && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid item xs={12} md={12}>
+            <div>
+              <label htmlFor="oldPassword">
+                {' '}
+                Old Password
+                <input
+                  type="password"
+                  className={classes.input}
+                  name="oldPassword"
+                  ref={register}
+                  onChange={(e) => handleChange(e)}
                 />
-              )}
-            </label>
-          </div>
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <div>
-            <label htmlFor="confirmPassword">
-              {' '}
-              Confirm Password
-              <input
-                type="password"
-                name="confirmPassword"
-                className={classes.input}
-                ref={register}
-                onChange={(e) => handleChange(e)}
-              />
-              {errors.confirmPassword && (
-                <small className={classes.err}>{errors.confirmPassword.message}</small>
-              )}
-            </label>
-          </div>
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <button type="submit" data-testid="signup-submit" className={classes.btn}>
-            CHANGE PASSWORD
-          </button>
-        </Grid>
-      </form>
+                {errors.oldPassword && (
+                  <small className={classes.err}>{errors.oldPassword.message}</small>
+                )}
+              </label>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <div>
+              <label htmlFor="newPassword">
+                {' '}
+                New Password
+                <input
+                  type="password"
+                  className={classes.input}
+                  name="newPassword"
+                  ref={register}
+                  onChange={(e) => handleChange(e)}
+                />
+                {errors.newPassword && (
+                  <PassErrorMsg
+                    message={errors.newPassword.message}
+                    data-testid="passErrMsg"
+                  />
+                )}
+              </label>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <div>
+              <label htmlFor="confirmPassword">
+                {' '}
+                Confirm Password
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  className={classes.input}
+                  ref={register}
+                  onChange={(e) => handleChange(e)}
+                />
+                {errors.confirmPassword && (
+                  <small className={classes.err}>{errors.confirmPassword.message}</small>
+                )}
+              </label>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <button type="submit" data-testid="signup-submit" className={classes.btn}>
+              SET NEW PASSWORD
+            </button>
+          </Grid>
+        </form>
+      )}
     </div>
   );
 };

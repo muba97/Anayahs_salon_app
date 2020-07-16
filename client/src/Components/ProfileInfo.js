@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { profileSchema } from '../utils/yupSchemas';
-import ChangePass from './ChangePass';
 
 const useStyles = makeStyles({
   field: {
@@ -44,9 +43,6 @@ const useStyles = makeStyles({
   },
   err: {
     color: 'red',
-  },
-  password: {
-    paddingTop: 30,
   },
 });
 
@@ -238,10 +234,6 @@ const ProfileInfo = ({ userInfo }) => {
           </Grid>
         )}
       </form>
-      <div className={classes.password}>
-        {' '}
-        <ChangePass />
-      </div>
     </div>
   );
 };
