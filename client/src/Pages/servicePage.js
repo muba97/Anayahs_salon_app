@@ -39,7 +39,7 @@ const handleChange = (e) => {
   if (temp !== []) {
     temp = [];
   }
-  for (let i = 0; i < serviceInfo.items.length; i++) {
+  for (let i = 0; i < serviceInfo.items.length; i += 1) {
     if (serviceInfo.items[i].label === e) {
       temp.push(serviceInfo.items[i]);
     }
@@ -51,17 +51,30 @@ const useStyles = makeStyles({
     marginTop: 40,
   },
 });
+const newService = (e) => {
+  let condition = false;
+
+  if (e === 'threading') {
+    condition = true;
+  }
+  return condition;
+};
+
 const ServicePage = () => {
   const classes = useStyles();
   return (
     <div>
       {serviceInfo.serviceLabels.map((labels) => (
         <div data-testid="services" className={classes.root}>
-          <Services serviceLabels={labels.service} items={handleChange(labels.service)} />
+          <Services
+            serviceLabels={labels.service}
+            items={handleChange(labels.service)}
+            newService={newService(labels.service)}
+          />
         </div>
       ))}
     </div>
   );
 };
-
+console.log(Services);
 export default ServicePage;

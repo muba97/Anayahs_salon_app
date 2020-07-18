@@ -9,13 +9,13 @@ const editSchema = yup.object().shape({
   title: yup.string().required('Title is Required'),
   time: yup.string().required('Time is Required'),
   price: yup.string().required('Price is Required'),
-  description: yup.string().required('Description is required'),
-  label: yup.string().required('Label is required'),
+  description: yup.string().required('Description is Required'),
+  label: yup.string().required('Label is Required'),
 });
 
 const useStyle = makeStyles({
   field: {
-    margin: 10,
+    margin: 14,
   },
   item: {
     justifyContent: 'center',
@@ -35,7 +35,6 @@ const useStyle = makeStyles({
   smallBtn: {
     background: '#000000',
     justifyContent: 'center',
-    float: 'right',
     display: 'flex',
     borderLeft: '1px solid',
     borderRight: '1px solid',
@@ -69,13 +68,29 @@ const useStyle = makeStyles({
       opacity: '40%',
     },
   },
+  err: {
+    color: 'red',
+  },
 });
+const emptyKeysObj = (obj) => {
+  const emptyObj = Object.keys(obj).every((key) => {
+    return obj[key] === '';
+  });
+  return emptyObj;
+};
 
+const atLeastOneEmptyKey = (obj) => {
+  const oneFound = Object.keys(obj).some((key) => {
+    return obj[key] === '';
+  });
+  return oneFound;
+};
 const ServiceItems = ({ items }) => {
   const [initData, setInitData] = useState(items);
   const [serviceData, setServiceData] = useState(items);
   const [edit, setEdit] = useState(true);
   const { register, handleSubmit, errors, reset } = useForm({
+    reValidateMode: 'onSubmit',
     validationSchema: editSchema,
   });
   const onSubmit = (data) => {
@@ -99,130 +114,150 @@ const ServiceItems = ({ items }) => {
   };
 
   const handleClick = () => {
-    setEdit(!edit);
+    if (emptyKeysObj(serviceData) || atLeastOneEmptyKey(serviceData)) {
+      setEdit(false);
+    } else {
+      setEdit(!edit);
+    }
   };
 
   const classes = useStyle();
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.span}>
-      <Grid item xs={10} md={10}>
-        <div>
-          <label htmlFor="title">
-            {' '}
-            Title
-            <input
-              data-testid="input-title"
-              type="text"
-              className={classes.item}
-              name="firstName"
-              placeholder="First Name"
-              defaultValue={serviceData.title}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </div>
-      </Grid>
-      <Grid item xs={10} md={10}>
-        <div>
-          <label htmlFor="time">
-            {' '}
-            Time
-            <input
-              data-testid="input-time"
-              type="text"
-              className={classes.item}
-              name="time"
-              placeholder="Time"
-              defaultValue={serviceData.time}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </div>
-      </Grid>
-      <Grid item xs={10} md={10}>
-        <div>
-          <label htmlFor="price">
-            {' '}
-            Price
-            <input
-              data-testid="input-price"
-              type="text"
-              className={classes.item}
-              name="price"
-              placeholder="Price"
-              defaultValue={serviceData.price}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </div>
-      </Grid>
-      <Grid item xs={10} md={10}>
-        <div>
-          <label htmlFor="description">
-            {' '}
-            Description
-            <input
-              data-testid="input-description"
-              type="text"
-              className={classes.item}
-              name="description"
-              placeholder="Description"
-              defaultValue={serviceData.description}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </div>
-      </Grid>
-      <Grid item xs={10} md={10}>
-        <div>
-          <label htmlFor="label">
-            {' '}
-            Label
-            <input
-              data-testid="input-label"
-              type="text"
-              className={classes.item}
-              name="label"
-              placeholder="Label"
-              defaultValue={serviceData.label}
-              ref={register}
-              disabled={edit}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </div>
-      </Grid>
-      <Grid item xs={7} md={7}>
-        <button
-          type="submit"
-          data-testid="edit-submit"
-          onClick={() => handleClick()}
-          className={classes.smallBtn}
-        >
-          {edit ? 'EDIT' : 'SUBMIT'}
-        </button>
-      </Grid>
-      {!edit && (
+    <div className={classes.span} data-testid="serviceItems">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid item xs={10} md={10}>
+          <div className={classes.field}>
+            <label htmlFor="title">
+              {' '}
+              Title
+              <input
+                type="text"
+                className={classes.item}
+                name="title"
+                placeholder="Title"
+                defaultValue={serviceData.title}
+                disabled={edit}
+                ref={register}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.title && (
+                <small className={classes.err}>{errors.title.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={10} md={10}>
+          <div className={classes.field}>
+            <label htmlFor="time">
+              {' '}
+              Time
+              <input
+                data-testid="input-time"
+                type="text"
+                className={classes.item}
+                name="time"
+                placeholder="Time"
+                defaultValue={serviceData.time}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.time && (
+                <small className={classes.err}>{errors.time.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={10} md={10}>
+          <div className={classes.field}>
+            <label htmlFor="price">
+              {' '}
+              Price
+              <input
+                data-testid="input-price"
+                type="text"
+                className={classes.item}
+                name="price"
+                placeholder="Price"
+                defaultValue={serviceData.price}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.price && (
+                <small className={classes.err}>{errors.price.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={10} md={10}>
+          <div className={classes.field}>
+            <label htmlFor="description">
+              {' '}
+              Description
+              <input
+                data-testid="input-description"
+                type="text"
+                className={classes.item}
+                name="description"
+                placeholder="Description"
+                defaultValue={serviceData.description}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.description && (
+                <small className={classes.err}>{errors.description.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
+        <Grid item xs={10} md={10}>
+          <div className={classes.field}>
+            <label htmlFor="label">
+              {' '}
+              Label
+              <input
+                data-testid="input-label"
+                type="text"
+                className={classes.item}
+                name="label"
+                placeholder="Label"
+                defaultValue={serviceData.label}
+                ref={register}
+                disabled={edit}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.label && (
+                <small className={classes.err}>{errors.label.message}</small>
+              )}
+            </label>
+          </div>
+        </Grid>
         <Grid item xs={7} md={7}>
           <button
-            data-testid="cancelButton"
-            type="button"
-            onClick={() => cancelClick()}
+            type="submit"
+            data-testid="edit-submit"
+            onClick={() => handleClick()}
             className={classes.smallBtn}
           >
-            CANCEL
+            {edit ? 'EDIT' : 'SUBMIT'}
           </button>
         </Grid>
-      )}
-    </form>
+        {!edit && (
+          <Grid item xs={7} md={7}>
+            <button
+              data-testid="cancelButton"
+              type="button"
+              onClick={() => cancelClick()}
+              className={classes.smallBtn}
+            >
+              CANCEL
+            </button>
+          </Grid>
+        )}
+      </form>
+    </div>
   );
 };
 
