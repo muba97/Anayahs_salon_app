@@ -2,23 +2,15 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient } from 'apollo-boost';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import LoginPage from './Pages/LoginPage';
 import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 import RegisterPage from './Pages/RegisterPage';
 
-const cache = new InMemoryCache();
-const link = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
-});
-
 const client = new ApolloClient({
-  cache,
-  link,
+  uri: 'http://localhost:50000/graphql',
+  cache: new InMemoryCache(),
 });
 
 const App = () => {
