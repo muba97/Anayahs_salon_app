@@ -3,10 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Services from '../Components/service';
 
 const serviceInfo = {
-  serviceLabels: [
-    { id: '1', service: 'threading' },
-    { id: '2', service: 'facial' },
-  ],
+  serviceLabels: [{ service: 'threading' }, { service: 'facial' }],
   items: [
     {
       id: 1,
@@ -34,6 +31,7 @@ const serviceInfo = {
     },
   ],
 };
+
 const handleChange = (e) => {
   let temp = [];
   if (temp !== []) {
@@ -65,7 +63,7 @@ const ServicePage = () => {
   return (
     <div>
       {serviceInfo.serviceLabels.map((labels) => (
-        <div data-testid="services" className={classes.root}>
+        <div data-testid="servicePage" className={classes.root}>
           <Services
             serviceLabels={labels.service}
             items={handleChange(labels.service)}
@@ -76,5 +74,5 @@ const ServicePage = () => {
     </div>
   );
 };
-console.log(Services);
+
 export default ServicePage;

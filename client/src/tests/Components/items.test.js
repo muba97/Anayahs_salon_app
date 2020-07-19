@@ -151,7 +151,7 @@ describe('<ServiceItems />', () => {
     expect(labelError).toBeInTheDocument();
 
     await act(async () => {
-        fireEvent.click(getByTestId('cancelButton'));
-      });
+      fireEvent.click(getByTestId('cancelButton'));
+    });
   });
 });
