@@ -17,7 +17,7 @@ const useStyle = makeStyles({
 const Loading = () => {
   const classes = useStyle();
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="loading">
       <img className={classes.loading} src={loading} alt="loading.." />
     </div>
   );

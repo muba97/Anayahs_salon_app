@@ -74,9 +74,14 @@ const ChangePass = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.field}>
+    <div data-testid="changePass" className={classes.field}>
       <Grid item xs={12} md={12}>
-        <button type="button" className={classes.btn} onClick={() => toggle()}>
+        <button
+          data-testid="showButton"
+          type="button"
+          className={classes.btn}
+          onClick={() => toggle()}
+        >
           CHANGE PASSWORD
         </button>
       </Grid>
@@ -86,7 +91,7 @@ const ChangePass = () => {
             <div>
               <label htmlFor="oldPassword">
                 {' '}
-                Old Password
+                Old Password *
                 <input
                   type="password"
                   className={classes.input}
@@ -104,7 +109,7 @@ const ChangePass = () => {
             <div>
               <label htmlFor="newPassword">
                 {' '}
-                New Password
+                New Password *
                 <input
                   type="password"
                   className={classes.input}
@@ -125,7 +130,7 @@ const ChangePass = () => {
             <div>
               <label htmlFor="confirmPassword">
                 {' '}
-                Confirm Password
+                Confirm Password *
                 <input
                   type="password"
                   name="confirmPassword"
@@ -140,7 +145,7 @@ const ChangePass = () => {
             </div>
           </Grid>
           <Grid item xs={12} md={12}>
-            <button type="submit" data-testid="signup-submit" className={classes.btn}>
+            <button type="submit" data-testid="submitButton" className={classes.btn}>
               SET NEW PASSWORD
             </button>
           </Grid>

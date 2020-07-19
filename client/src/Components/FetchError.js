@@ -16,7 +16,7 @@ const FetchError = ({ error }) => {
   const classes = useStyles();
   const errorMessage = `Error: ${message}`;
   return (
-    <div className={classes.root}>
+    <div data-testid="fetchError" className={classes.root}>
       <h2>{errorMessage}</h2>
     </div>
   );
