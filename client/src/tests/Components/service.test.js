@@ -21,7 +21,9 @@ describe('<Services />', () => {
     cleanup();
   });
   test('render services', () => {
-    const { getByTestId } = render(<Services serviceLabels={{}} items={{}} />);
+    const { getByTestId } = render(
+      <Services serviceLabels={serviceLabels.label} items={[]} />
+    );
     const serviceInfo = getByTestId('serviceInfo');
     expect(serviceInfo).toBeInTheDocument();
   });

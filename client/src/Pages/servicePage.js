@@ -44,11 +44,13 @@ const handleChange = (e) => {
   }
   return temp;
 };
+
 const useStyles = makeStyles({
   root: {
     marginTop: 40,
   },
 });
+
 const newService = (e) => {
   let condition = false;
 
@@ -61,9 +63,9 @@ const newService = (e) => {
 const ServicePage = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div data-testid="servicePage">
       {serviceInfo.serviceLabels.map((labels) => (
-        <div data-testid="servicePage" className={classes.root}>
+        <div className={classes.root} key={labels.service}>
           <Services
             serviceLabels={labels.service}
             items={handleChange(labels.service)}

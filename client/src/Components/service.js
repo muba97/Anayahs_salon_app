@@ -53,7 +53,7 @@ const useStyle = makeStyles({
 const Services = ({ serviceLabels, items, newService }) => {
   const [open, setOpen] = useState(false);
 
-  console.log(serviceLabels)
+  console.log(serviceLabels);
 
   const toggle = () => setOpen(!open);
   const classes = useStyle();
@@ -68,7 +68,7 @@ const Services = ({ serviceLabels, items, newService }) => {
       )}
       <button className={classes.btn} type="button" onClick={() => toggle()}>
         <div className={classes.field}>
-          <p className={classes.field}> {JSON.stringify(serviceLabels)} </p>
+          <p className={classes.field}> {serviceLabels} </p>
         </div>
         <div className={classes.field}>
           <p>{open ? 'Close' : 'Open'}</p>
@@ -86,20 +86,11 @@ const Services = ({ serviceLabels, items, newService }) => {
     </div>
   );
 };
+
 Services.propTypes = {
-  serviceLabels: PropTypes.shape({
-    labels: PropTypes.string,
-  }).isRequired,
-  items: PropTypes.shape([
-    {
-      id: PropTypes.number,
-      title: PropTypes.string,
-      time: PropTypes.string,
-      price: PropTypes.string,
-      description: PropTypes.string,
-      label: PropTypes.string,
-    },
-  ]).isRequired,
+  serviceLabels: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  newService: PropTypes.bool.isRequired,
 };
 
 export default Services;
