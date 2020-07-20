@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import ServiceItems from './items';
+import ServiceItems from './ServiceItems';
 
 const useStyle = makeStyles({
   field: {
@@ -53,20 +53,27 @@ const useStyle = makeStyles({
 const Services = ({ serviceLabels, items, newService }) => {
   const [open, setOpen] = useState(false);
 
-  console.log(serviceLabels);
-
   const toggle = () => setOpen(!open);
   const classes = useStyle();
   return (
     <div data-testid="serviceInfo">
       {newService && (
         <Link to="/newservice">
-          <button className={classes.smallBtn} type="button">
+          <button
+            className={classes.smallBtn}
+            type="button"
+            data-testid="newServiceButton"
+          >
             ADD NEW SERVICE
           </button>
         </Link>
       )}
-      <button className={classes.btn} type="button" onClick={() => toggle()}>
+      <button
+        className={classes.btn}
+        type="button"
+        onClick={() => toggle()}
+        data-testid="openButton"
+      >
         <div className={classes.field}>
           <p className={classes.field}> {serviceLabels} </p>
         </div>
@@ -77,7 +84,11 @@ const Services = ({ serviceLabels, items, newService }) => {
       {open && (
         <ul className={classes.field}>
           {items.map((item) => (
-            <div data-testid="services" className={classes.root} key={item.id}>
+            <div
+              data-testid="serviceItems"
+              className={classes.root}
+              key={items.toString()}
+            >
               <ServiceItems items={item} />
             </div>
           ))}

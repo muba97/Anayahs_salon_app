@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Services from '../Components/service';
+import Services from '../Components/Services';
 
 const serviceInfo = {
   serviceLabels: [{ service: 'threading' }, { service: 'facial' }],
   items: [
     {
-      id: 1,
+      key: 1,
       title: 'Eyebrows',
       time: '15',
       price: '10',
@@ -14,7 +14,7 @@ const serviceInfo = {
       label: 'threading',
     },
     {
-      id: 2,
+      key: 2,
       title: 'Chin',
       time: '15',
       price: '7',
@@ -22,7 +22,7 @@ const serviceInfo = {
       label: 'threading',
     },
     {
-      id: 3,
+      key: 3,
       title: 'face',
       time: '30',
       price: '25',
@@ -31,26 +31,11 @@ const serviceInfo = {
     },
   ],
 };
-
-const handleChange = (e) => {
-  let temp = [];
-  if (temp !== []) {
-    temp = [];
-  }
-  for (let i = 0; i < serviceInfo.items.length; i += 1) {
-    if (serviceInfo.items[i].label === e) {
-      temp.push(serviceInfo.items[i]);
-    }
-  }
-  return temp;
-};
-
 const useStyles = makeStyles({
   root: {
-    marginTop: 40,
+    margin: 40,
   },
 });
-
 const newService = (e) => {
   let condition = false;
 
@@ -60,12 +45,22 @@ const newService = (e) => {
   return condition;
 };
 
+const handleChange = (e) => {
+  const temp = [];
+  for (let i = 0; i < serviceInfo.items.length; i += 1) {
+    if (serviceInfo.items[i].label === e) {
+      temp.push(serviceInfo.items[i]);
+    }
+  }
+  return temp;
+};
+
 const ServicePage = () => {
   const classes = useStyles();
   return (
     <div data-testid="servicePage">
       {serviceInfo.serviceLabels.map((labels) => (
-        <div className={classes.root} key={labels.service}>
+        <div key={labels.service} data-testid="labels" className={classes.root}>
           <Services
             serviceLabels={labels.service}
             items={handleChange(labels.service)}

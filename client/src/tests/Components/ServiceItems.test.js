@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import ServiceItems from '../../Components/items';
+import ServiceItems from '../../Components/ServiceItems';
 
 const items = {
   title: 'eyebrows',

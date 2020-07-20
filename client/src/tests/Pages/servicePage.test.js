@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import ServicePage from '../../Pages/servicePage';
+import ServicePage from '../../Pages/ServicePage';
 
 describe('<ServicePage /> Tests', () => {
   afterEach(() => {
