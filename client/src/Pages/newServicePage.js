@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 const NewServicePage = () => {
   const classes = useStyles();
   return (
-    <div className={classes.root} data-testid="registerPage">
+    <div className={classes.root} data-testid="newServicePage">
       <NewService />
     </div>
   );
