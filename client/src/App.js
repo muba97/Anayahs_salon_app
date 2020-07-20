@@ -11,6 +11,7 @@ import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 import RegisterPage from './Pages/RegisterPage';
 import ServicePage from './Pages/ServicePage';
+import NewServicePage from './Pages/NewServicePage';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -30,7 +31,6 @@ const App = () => {
           <Navbar />
           <Switch>
             <Route exact path="/">
-              <ProfilePage />
               <LoginPage />
             </Route>
             <Route exact path="/services">
@@ -41,6 +41,9 @@ const App = () => {
             </Route>
             <Route exact path="/register">
               <RegisterPage />
+            </Route>
+            <Route exact path="/newservice">
+              <NewServicePage />
             </Route>
           </Switch>
         </Router>
