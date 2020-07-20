@@ -7,6 +7,7 @@ import LoginPage from './Pages/LoginPage';
 import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 import RegisterPage from './Pages/RegisterPage';
+import ServicePage from './Pages/ServicePage';
 
 const client = new ApolloClient({
   uri: 'http://localhost:50000/graphql',
@@ -22,6 +23,9 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <LoginPage />
+            </Route>
+            <Route exact path="/services">
+              <ServicePage />
             </Route>
             <Route exact path="/profile">
               <ProfilePage />
