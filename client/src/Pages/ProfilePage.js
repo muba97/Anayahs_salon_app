@@ -7,10 +7,9 @@ import ChangePass from '../Components/ChangePass';
 import Loading from '../Components/Loading';
 import FetchError from '../Components/FetchError';
 
-const USER_INFO = gql`
-  query getUser {
-    user(id: "5f0b8d54dd147401c51afd9f") {
-      id
+export const USER_INFO = gql`
+  query getUser($userId: String) {
+    user(id: $userId) {
       firstName
       lastName
       email
@@ -33,7 +32,8 @@ const useStyles = makeStyles({
 });
 
 const ProfilePage = () => {
-  const { loading, error, data } = useQuery(USER_INFO);
+  const userId = '5f0b8d54dd147401c51afd9f';
+  const { loading, error, data } = useQuery(USER_INFO, { variables: { userId } });
   const classes = useStyles();
 
   if (loading) {
