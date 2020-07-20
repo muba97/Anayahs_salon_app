@@ -36,27 +36,27 @@ const useStyles = makeStyles({
     margin: 40,
   },
 });
-const newService = (e) => {
-  let condition = false;
-
-  if (e === 'threading') {
-    condition = true;
-  }
-  return condition;
-};
-
-const handleChange = (e) => {
-  const temp = [];
-  for (let i = 0; i < serviceInfo.items.length; i += 1) {
-    if (serviceInfo.items[i].label === e) {
-      temp.push(serviceInfo.items[i]);
-    }
-  }
-  return temp;
-};
 
 const ServicePage = () => {
   const classes = useStyles();
+  const newService = (e) => {
+    let condition = false;
+
+    if (e === 'threading') {
+      condition = true;
+    }
+    return condition;
+  };
+
+  const handleChange = (e) => {
+    const temp = [];
+    for (let i = 0; i < serviceInfo.items.length; i += 1) {
+      if (serviceInfo.items[i].label === e) {
+        temp.push(serviceInfo.items[i]);
+      }
+    }
+    return temp;
+  };
   return (
     <div data-testid="servicePage">
       {serviceInfo.serviceLabels.map((labels) => (
