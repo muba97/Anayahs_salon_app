@@ -9,7 +9,6 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 import ServicePage from './Pages/ServicePage';
-import NewServicePage from './Pages/NewServicePage';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -50,9 +49,6 @@ const App = () => {
             </Route>
             <Route exact path="/services">
               <ServicePage />
-            </Route>
-            <Route exact path="/newservice">
-              <NewServicePage />
             </Route>
           </Switch>
         </Router>
