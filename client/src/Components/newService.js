@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import LabelMods from './LabelMods';
 
 const editSchema = yup.object().shape({
   title: yup.string().required('Title is Required'),
@@ -79,7 +80,7 @@ const NewService = () => {
   const [formData, setFormData] = useState([]);
   const [labelOpen, setlabelOpen] = useState(false);
   const [itemOpen, setitemOpen] = useState(false);
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, reset, errors } = useForm({
     reValidateMode: 'onSubmit',
     validationSchema: editSchema,
   });
@@ -89,8 +90,10 @@ const NewService = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
     setFormData(data);
+    console.log(formData);
+    e.target.reset();
   };
 
   const labelToggle = () => {
@@ -109,7 +112,6 @@ const NewService = () => {
       setitemOpen(!itemOpen);
     }
   };
-
   return (
     <div data-testid="newServiceInfo">
       <button type="button" className={classes.toggle} onClick={() => labelToggle()}>
@@ -119,32 +121,9 @@ const NewService = () => {
         Add new items
       </button>
       {labelOpen && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid item xs={12} md={12} container justify="center">
-            <div className={classes.field}>
-              <label htmlFor="label">
-                {' '}
-                Label
-                <input
-                  type="text"
-                  className={classes.item}
-                  name="label"
-                  placeholder="Label"
-                  ref={register}
-                  onChange={(e) => handleChange(e)}
-                />
-                {errors.label && (
-                  <small className={classes.err}>{errors.label.message}</small>
-                )}
-              </label>
-            </div>
-          </Grid>
-          <Grid item xs={12} md={12} container justify="center">
-            <button type="submit" data-testid="add-submit" className={classes.btn}>
-              ADD
-            </button>
-          </Grid>
-        </form>
+        <div>
+          <LabelMods />
+        </div>
       )}
       {itemOpen && (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -248,9 +227,7 @@ const NewService = () => {
             </div>
           </Grid>
           <Grid item xs={12} md={12} container justify="center">
-            <button type="submit" data-testid="Add-submit" className={classes.btn}>
-              ADD
-            </button>
+            <input type="submit" data-testid="Add-submit" className={classes.btn} />
           </Grid>
         </form>
       )}

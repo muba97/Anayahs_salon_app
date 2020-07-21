@@ -82,7 +82,7 @@ const Services = ({ serviceLabels, items, newService }) => {
           {items.map((item) => (
             <div
               data-testid="serviceItems"
-              className={classes.root}
+              className={classes.field}
               key={items.toString()}
             >
               <ServiceItems items={item} />
