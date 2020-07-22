@@ -8,8 +8,8 @@ import Loading from '../Components/Loading';
 import FetchError from '../Components/FetchError';
 
 export const USER_INFO = gql`
-  query getUser($userId: String) {
-    user(id: $userId) {
+  query getUser($id: ID!) {
+    user(id: $id) {
       firstName
       lastName
       email
@@ -32,8 +32,9 @@ const useStyles = makeStyles({
 });
 
 const ProfilePage = () => {
-  const userId = '5f0b8d54dd147401c51afd9f';
-  const { loading, error, data } = useQuery(USER_INFO, { variables: { userId } });
+  const { loading, error, data } = useQuery(USER_INFO, {
+    variables: { id: '5f0b8d54dd147401c51afd9f' },
+  });
   const classes = useStyles();
 
   if (loading) {
