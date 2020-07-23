@@ -12,8 +12,6 @@ const useStyle = makeStyles({
     background: '#000000',
     justifyContent: 'center',
     display: 'flex',
-    borderLeft: '5px solid',
-    borderRight: '5px solid',
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
     height: 40,
@@ -34,8 +32,6 @@ const useStyle = makeStyles({
     display: 'flex',
     background: '#000000',
     borderRadius: '4px',
-    borderLeft: '5px solid',
-    borderRight: '5px solid',
     marginBottom: 5,
     color: 'white',
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
@@ -86,7 +82,7 @@ const Services = ({ serviceLabels, items, newService }) => {
           {items.map((item) => (
             <div
               data-testid="serviceItems"
-              className={classes.root}
+              className={classes.field}
               key={items.toString()}
             >
               <ServiceItems items={item} />

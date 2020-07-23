@@ -8,6 +8,7 @@ import ProfilePage from './Pages/ProfilePage';
 import Navbar from './Components/Navbar';
 import RegisterPage from './Pages/RegisterPage';
 import ServicePage from './Pages/ServicePage';
+import NewServicePage from './Pages/NewServicePage';
 
 const client = new ApolloClient({
   uri: 'http://localhost:50000/graphql',
@@ -34,6 +35,9 @@ const App = () => {
             </Route>
             <Route exact path="/register">
               <RegisterPage />
+            </Route>
+            <Route exact path="/newservice">
+              <NewServicePage />
             </Route>
           </Switch>
         </Router>
