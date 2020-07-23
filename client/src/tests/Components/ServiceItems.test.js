@@ -154,4 +154,32 @@ describe('<ServiceItems />', () => {
       fireEvent.click(getByTestId('cancelButton'));
     });
   });
+  test('Checking if the fields were deleted ', async () => {
+    const { getByTestId, getByLabelText } = render(<ServiceItems items={items} />);
+
+    await act(async () => {
+      fireEvent.click(getByTestId('delete-cancel'));
+    });
+    const titleInput = getByLabelText('Title');
+    expect(titleInput.value).toBe('eyebrows');
+
+    await act(async () => {
+      fireEvent.click(getByTestId('deleteButton'));
+    });
+    const serviceItems = getByTestId('serviceItems');
+    expect(serviceItems).toBeInTheDocument();
+  });
+  test('Checking if the delete cancel works', async () => {
+    const { getByTestId, getByLabelText } = render(<ServiceItems items={items} />);
+
+    await act(async () => {
+      fireEvent.click(getByTestId('delete-cancel'));
+    });
+
+    await act(async () => {
+      fireEvent.click(getByTestId('delete-cancel'));
+    });
+    const titleInput = getByLabelText('Title');
+    expect(titleInput.value).toBe('eyebrows');
+  });
 });
