@@ -213,11 +213,11 @@ const Register = () => {
                 )}
               </label>
             </div>
-            <Grid item xs={12} md={12}>
-              <button type="submit" data-testid="signup-submit" className={classes.btn}>
-                SIGN UP
-              </button>
-            </Grid>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <button type="submit" data-testid="signup-submit" className={classes.btn}>
+              SIGN UP
+            </button>
           </Grid>
         </form>
       </div>

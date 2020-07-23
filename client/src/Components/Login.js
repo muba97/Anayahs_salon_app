@@ -3,12 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import * as yup from 'yup';
-
-const editSchema = yup.object().shape({
-  email: yup.string().email('Valid email is required').required('Email is required'),
-  password: yup.string().required('Password is required'),
-});
+import { loginSchema } from '../utils/yupSchemas';
 
 const useStyles = makeStyles({
   input: {
@@ -48,7 +43,7 @@ const LoginInfo = () => {
   const [formData, setFormData] = useState([]);
   const { register, handleSubmit, errors } = useForm({
     reValidateMode: 'onSubmit',
-    validationSchema: editSchema,
+    validationSchema: loginSchema,
   });
 
   const handleChange = (e) => {
