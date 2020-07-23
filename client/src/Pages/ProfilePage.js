@@ -1,23 +1,13 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import ProfileInfo from '../Components/ProfileInfo';
 import ChangePass from '../Components/ChangePass';
 import Loading from '../Components/Loading';
 import FetchError from '../Components/FetchError';
-
-export const USER_INFO = gql`
-  query getUser($id: ID!) {
-    user(id: $id) {
-      firstName
-      lastName
-      email
-      birthDay
-      phoneNumber
-    }
-  }
-`;
+import { USER_INFO } from '../GQLqueries/user';
 
 const useStyles = makeStyles({
   root: {
@@ -31,9 +21,9 @@ const useStyles = makeStyles({
   },
 });
 
-const ProfilePage = () => {
+const ProfilePage = ({ id }) => {
   const { loading, error, data } = useQuery(USER_INFO, {
-    variables: { id: '5f0b8d54dd147401c51afd9f' },
+    variables: { id },
   });
   const classes = useStyles();
 
@@ -54,6 +44,10 @@ const ProfilePage = () => {
       </Grid>
     </div>
   );
+};
+
+ProfilePage.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default ProfilePage;

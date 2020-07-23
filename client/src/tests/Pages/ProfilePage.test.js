@@ -1,71 +1,48 @@
 import React from 'react';
-import { gql } from '@apollo/client';
 import { render, cleanup } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
+import { USER_INFO } from '../../GQLqueries/user';
 import ProfilePage from '../../Pages/ProfilePage';
 
-const USER_INFO = gql`
-  query getUser($userId: String) {
-    user(id: $userId) {
-      firstName
-      lastName
-      email
-      birthDay
-      phoneNumber
-    }
-  }
-`;
+const userId = '5f0b8d54dd147401c51afd9f';
+const id = '1';
 
-const mocks = [
-  {
-    request: {
-      query: USER_INFO,
-      variables: {
-        id: '1',
-      },
-    },
-    result: {
-      data: {
-        user: {
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'email@email.com',
-          birthDay: '01/01/1989',
-          phoneNumber: '111-111-1111',
-        },
-      },
+const USER_INFO_RESPONSE = {
+  data: {
+    user: {
+      firstName: 'test',
+      lastName: 'testing',
+      email: 'test@gmail.com',
+      birthDay: '10/12/2019',
+      phoneNumber: '832-222-1111',
     },
   },
-];
+};
+
+const mocks = {
+  request: {
+    query: USER_INFO,
+    variables: { id },
+  },
+  result: USER_INFO_RESPONSE,
+};
 
 describe('<ProfilePage /> Tests', () => {
   afterEach(() => {
     cleanup();
   });
 
-  test('should render loading state of component', () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <ProfilePage />
+  test('should render final state', async () => {
+    const { findByTestId } = render(
+      <MockedProvider mocks={[mocks]} addTypename={false}>
+        <ProfilePage id="1" />
       </MockedProvider>
     );
 
-    const loadingState = getByTestId('loading');
-
+    const loadingState = await findByTestId('loading');
     expect(loadingState).toBeInTheDocument();
+
+    const profilePage = await findByTestId('profilePage');
+    expect(profilePage).toBeInTheDocument();
   });
-
-  // test('should render final state of component', async () => {
-  //   const { getByTestId } = render(
-  //     <MockedProvider mocks={mocks} addTypename={false}>
-  //       <ProfilePage />
-  //     </MockedProvider>
-  //   );
-
-  //   const loadingState = getByTestId('loading');
-  //   expect(loadingState).toBeInTheDocument();
-
-  //   const profilePage = await getByTestId('profilePage');
-  //   expect(profilePage).toBeInTheDocument();
-  // });
 });

@@ -14,6 +14,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const id = '5f0b8d54dd147401c51afd9f';
+
 const App = () => {
   return (
     <div className="App" data-testid="app">
@@ -28,7 +30,7 @@ const App = () => {
               <ServicePage />
             </Route>
             <Route exact path="/profile">
-              <ProfilePage />
+              <ProfilePage id={id} />
             </Route>
             <Route exact path="/register">
               <RegisterPage />
