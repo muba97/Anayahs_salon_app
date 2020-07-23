@@ -52,7 +52,7 @@ const useStyles = makeStyles({
 const LabelMods = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState([]);
-  const { register, handleSubmit, reset, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     reValidateMode: 'onSubmit',
     validationSchema: editSchema,
   });
@@ -64,19 +64,18 @@ const LabelMods = () => {
   };
   const onSubmit = (data, e) => {
     setFormData(data);
-    console.log(formData);
-    e.target.reset();
+    reset(e);
   };
 
   return (
-    <div data-testid="newServiceInfo">
+    <div data-testid="labelMods">
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12} md={12} container justify="center">
             <div className={classes.field}>
               <label htmlFor="label">
                 {' '}
-                Label
+                Label *
                 <input
                   data-testid="input-label"
                   type="text"

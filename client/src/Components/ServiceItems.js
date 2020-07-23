@@ -131,9 +131,9 @@ const ServiceItems = ({ items }) => {
 
   const classes = useStyle();
   return (
-    <div>
+    <div data-testid="serviceItems">
       {confirmDelete && (
-        <div className={classes.span} data-testid="serviceItems">
+        <div className={classes.span}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid item xs={10} md={10}>
               <div className={classes.field}>
@@ -141,6 +141,7 @@ const ServiceItems = ({ items }) => {
                   {' '}
                   Title
                   <input
+                    data-testid="input-title"
                     type="text"
                     className={classes.item}
                     name="title"

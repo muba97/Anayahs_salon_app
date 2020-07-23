@@ -80,7 +80,7 @@ const NewService = () => {
   const [formData, setFormData] = useState([]);
   const [labelOpen, setlabelOpen] = useState(false);
   const [itemOpen, setitemOpen] = useState(false);
-  const { register, handleSubmit, reset, errors } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     reValidateMode: 'onSubmit',
     validationSchema: editSchema,
   });
@@ -92,8 +92,8 @@ const NewService = () => {
   };
   const onSubmit = (data, e) => {
     setFormData(data);
+    reset(e);
     console.log(formData);
-    e.target.reset();
   };
 
   const labelToggle = () => {
@@ -114,10 +114,20 @@ const NewService = () => {
   };
   return (
     <div data-testid="newServiceInfo">
-      <button type="button" className={classes.toggle} onClick={() => labelToggle()}>
+      <button
+        type="button"
+        className={classes.toggle}
+        onClick={() => labelToggle()}
+        data-testid="labelButton"
+      >
         Add new labels
       </button>
-      <button type="button" className={classes.toggle} onClick={() => itemToggle()}>
+      <button
+        type="button"
+        data-testid="itemButton"
+        className={classes.toggle}
+        onClick={() => itemToggle()}
+      >
         Add new items
       </button>
       {labelOpen && (
@@ -131,7 +141,7 @@ const NewService = () => {
             <div className={classes.field}>
               <label htmlFor="title">
                 {' '}
-                Title
+                Title *
                 <input
                   type="text"
                   className={classes.item}
@@ -150,7 +160,7 @@ const NewService = () => {
             <div className={classes.field}>
               <label htmlFor="time">
                 {' '}
-                Time
+                Time *
                 <input
                   data-testid="input-time"
                   type="text"
@@ -170,7 +180,7 @@ const NewService = () => {
             <div className={classes.field}>
               <label htmlFor="price">
                 {' '}
-                Price
+                Price *
                 <input
                   data-testid="input-price"
                   type="text"
@@ -190,7 +200,7 @@ const NewService = () => {
             <div className={classes.field}>
               <label htmlFor="description">
                 {' '}
-                Description
+                Description *
                 <input
                   data-testid="input-description"
                   type="text"
@@ -210,7 +220,7 @@ const NewService = () => {
             <div className={classes.field}>
               <label htmlFor="label">
                 {' '}
-                Label
+                Label *
                 <input
                   data-testid="input-label"
                   type="text"
@@ -227,7 +237,7 @@ const NewService = () => {
             </div>
           </Grid>
           <Grid item xs={12} md={12} container justify="center">
-            <input type="submit" data-testid="Add-submit" className={classes.btn} />
+            <input type="submit" data-testid="add-submit" className={classes.btn} />
           </Grid>
         </form>
       )}
