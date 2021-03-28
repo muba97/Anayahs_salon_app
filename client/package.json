@@ -24,6 +24,7 @@
     "react-hook-form": "^5.7.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "typescript": "^4.2.3",
     "yup": "^0.29.1"
   },
   "scripts": {
